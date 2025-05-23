@@ -1,0 +1,186 @@
+{
+  "home": {
+    "greeting": "Hey, I'm",
+    "name": "Muhamed Ibrahim",
+    "Designation": "Aspiring Web Developer",
+    "cvLink": "https://drive.google.com/file/d/1hns_Iu78MJwndd2WbLVZmYCWB8aZPMY7/view?usp=drive_link",
+    "socialLinks": [
+      {
+        "platform": "LinkedIn",
+        "url": "#",
+        "icon": "bx bxl-linkedin"
+      },
+      {
+        "platform": "GitHub",
+        "url": "#",
+        "icon": "bx bxl-github"
+      }
+    ],
+    "profileImage": "assets/img/perfil.png"
+  },
+
+  "about": {
+    "image": "assets/img/about.png",
+    "infoBoxes": [
+      {
+        "icon": "bx bx-award",
+        "title": "Experience",
+        "subtitle": "3+ Months Internships "
+      },
+      {
+        "icon": "bx bx-briefcase-alt",
+        "title": "Completed",
+        "subtitle": "Multiple Academic & Personal Projects"
+      },
+      {
+        "icon": "bx bx-support",
+        "title": "Support",
+        "subtitle": "Open to Freelance & Collaboration"
+      }
+    ],
+    "description": "Aspiring web developer skilled in HTML, CSS, JavaScript, Python, and frameworks like Node.js and Bootstrap. Passionate about building efficient, user-centered digital solutions and continuously growing through real-world experience."
+  },
+  "skills": {
+    "subtitle": "My Abilities",
+    "title": "Skills",
+    "categories": [
+      {
+        "categoryTitle": "Frontend Development",
+        "skills": [
+          { "name": "HTML", "level": "Advanced" },
+          { "name": "CSS", "level": "Advanced" },
+          { "name": "Javascript", "level": "Advanced" },
+          { "name": "Bootstrap", "level": "Intermediate" },
+          { "name": "Git", "level": "Advanced" },
+          { "name": "React", "level": "basics" }
+        ]
+      },
+      {
+        "categoryTitle": "Backend Development",
+        "skills": [
+          { "name": "Node JS", "level": "Intermediate" },
+          { "name": "ML/DL", "level": "basics" },
+          { "name": "Flask", "level": "Intermediate" },
+
+          { "name": "Python", "level": "Intermediate" },
+          { "name": "MySQL", "level": "Intermediate" },
+
+          { "name": "Firebase", "level": "Intermediate" }
+        ]
+      }
+    ]
+  },
+  "projects": {
+    "sectionTitle": "Recent Works ",
+    "sectionSubtitle": "My Projects",
+    "projects": [
+      {
+        "title": "PG Result Management System (UNOM)",
+        "description": "A web system developed to automate result management for postgraduate students using Node.js, MySQL, Handlebars, and Bootstrap.",
+        "image": "assets/img/Pgresult.png",
+        "knowMore": "https://github.com/Mohammadibbu/Result-management",
+        "link": "https://github.com/Mohammadibbu/Result-management"
+      },
+      {
+        "title": "Anime Recommendation Engine",
+        "description": "Built using Python, Flask, scikit-learn, and Firebase to suggest anime based on user preferences with cosine similarity.",
+        "image": "assets/img/anime.png",
+        "knowMore": "https://github.com/Mohammadibbu/Anime-recommendation-Engine-using-ML",
+        "link": "https://anime-recommendation-engine-using-ml-khmb.onrender.com/"
+      },
+      {
+        "title": "GuessMaster",
+        "description": "GuessMaster is an interactive web application that predicts the number you are thinking of! Through a series of four simple yes/no questions, the system uses your answers to determine the exact number you have in mind. ",
+        "image": "assets/img/guessmaster.jpg",
+        "knowMore": "https://github.com/Mohammadibbu/GuessMaster",
+        "link": "https://mohammadibbu.github.io/GuessMaster/"
+      },
+      {
+        "title": "RTO Finder",
+        "description": "A web application that helps users find the nearest RTO office based on their location. It uses Google Maps API for location services and provides information about RTO offices.",
+        "image": "assets/img/RTO.jpg",
+        "knowMore": "https://github.com/Mohammadibbu/rto-finder-main",
+        "link": "https://mohammadibbu.github.io/rto-finder-main/"
+      },
+      {
+        "title": "Blood Donor Finder",
+        "description": "A web application that connects blood donors with those in need. It allows users to register as donors and search for available donors based on blood type and location.",
+        "image": "assets/img/Blooddonor.jpg",
+
+        "knowMore": "https://github.com/Mohammadibbu/BloodDonation",
+        "link": "https://mohammadibbu.github.io/BloodDonation/"
+      }
+    ]
+  },
+  "internshipExperience": {
+    "sectionTitle": "Work Experience",
+    "sectionSubtitle": "My Internship",
+    "internships": [
+      {
+        "company": "Cubic Designz, Chennai",
+        "position": "Web Developer Intern",
+        "duration": "Jan 2025 – Mar 2025",
+        "description": "Worked on WordPress-based websites, customized themes/plugins, and collaborated on improving UI/UX designs.",
+        "certificate": "https://drive.google.com/file/d/1yOxlN48TrcbDGNeLUamtvyiQl6WeYOTi/view"
+      },
+      {
+        "company": "NasoTechnologies Pvt. Ltd.",
+        "position": "Full Stack Developer Intern",
+        "duration": "May 2024 – June 2024",
+        "description": "Built front-end and back-end for an Anime Recommendation System and optimized application performance in a team setting.",
+        "certificate": "https://drive.google.com/file/d/1yOZpudQoD6WwjWpjUjbj_wAj3N2ywia3/view"
+      }
+    ]
+  },
+  "Education": {
+    "sectionTitle": "My Academic Background",
+    "sectionSubtitle": "My Education",
+    "educations": [
+      {
+        "image": "https://upload.wikimedia.org/wikipedia/en/thumb/2/2e/Madras_University_Seal.svg/270px-Madras_University_Seal.svg.png",
+        "degree": "Master of Science in Information Technology",
+        "institution": "University of Madras, Guindy Campus",
+        "duration": "Aug 2023 – Apr 2025"
+      },
+      {
+        "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4b41HEJdsmowe7Acpb0Gbf7OYOCwvof8MSQ&s",
+        "degree": "Bachelor of Computer Applications (BCA)",
+        "institution": "Apollo Arts And Science College, Poonamallee",
+        "duration": "July 2020 – Apr 2023",
+        "cgpa": "7.7"
+      }
+    ]
+  },
+
+  "contact": {
+    "sectionTitle": "Contact Me",
+    "sectionSubtitle": "Get in touch",
+    "methods": [
+      {
+        "platform": "Email",
+        "icon": "bx bx-mail-send",
+        "data": "user@gmail.com",
+        "link": "mailto:user@gmail.com"
+      }
+    ]
+  },
+
+  "certificates": {
+    "sectionTitle": "My Certificates",
+    "sectionSubtitle": "My Achievements",
+    "certificates": [
+      {
+        "title": "Certificate 1",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+        "image": "assets/img/certificate1.png",
+        "link": "#"
+      },
+      {
+        "title": "Certificate 2",
+        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+        "image": "assets/img/certificate2.png",
+        "link": "#"
+      }
+    ]
+  }
+}
