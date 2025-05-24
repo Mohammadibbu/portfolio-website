@@ -16,6 +16,69 @@ window.addEventListener("load", () => {
   updateColors(); // initial call
 });
 
+const themeToggle = document.querySelector("#theme-button");
+const body = document.body;
+
+// Apply saved theme on page load
+const savedTheme = localStorage.getItem("theme");
+if (savedTheme === "dark") {
+  body.classList.add("dark-theme");
+  themeToggle.classList.add("bx-moon");
+} else {
+  themeToggle.classList.add("bx-sun");
+}
+
+// Toggle theme on click
+themeToggle.addEventListener("click", () => {
+  body.classList.toggle("dark-theme");
+  const isDark = body.classList.contains("dark-theme");
+
+  themeToggle.classList.toggle("bx-moon", isDark);
+  themeToggle.classList.toggle("bx-sun", !isDark);
+
+  localStorage.setItem("theme", isDark ? "dark" : "light");
+});
+
+// Smooth scroll for internal links
+const navLinks = document.querySelectorAll(".nav__link");
+const sections = Array.from(navLinks).map((link) => {
+  const href = link.getAttribute("href");
+  return document.querySelector(href);
+});
+
+function onScroll() {
+  const scrollY = window.pageYOffset;
+
+  sections.forEach((section, index) => {
+    if (!section) return; // safety check
+
+    const sectionTop = section.offsetTop - 50; // offset to trigger a bit before
+    const sectionHeight = section.offsetHeight;
+
+    if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
+      // Remove active class from all links
+      navLinks.forEach((link) => link.classList.remove("active-link"));
+
+      // Add active class to current link
+      navLinks[index].classList.add("active-link");
+    }
+  });
+}
+
+// Update active link on scroll
+window.addEventListener("scroll", onScroll);
+
+// Also keep your click listener to handle clicks
+navLinks.forEach((link) => {
+  link.addEventListener("click", (e) => {
+    // Remove active-link from all links
+    navLinks.forEach((eachlink) => eachlink.classList.remove("active-link"));
+
+    // Add active-link to clicked one
+    e.currentTarget.classList.add("active-link");
+  });
+});
+
 // Fetch data from the JSON file
 async function fetchData() {
   try {
@@ -49,6 +112,7 @@ function loadHome(homeData) {
     `
     )
     .join("");
+  console.log(socialLinksHTML);
 
   home.innerHTML = `
     <div class="home__container container grid">
@@ -296,7 +360,7 @@ document.getElementById("sendmessage").addEventListener("click", function (e) {
   const email = document.getElementById("email").value.trim();
   const message = document.getElementById("message").value.trim();
 
-  const mailtoLink = `mailto:user@gmail.com?subject=Message from ${encodeURIComponent(
+  const mailtoLink = `mailto:mohammadibbu008@gmail.com?subject=Message from ${encodeURIComponent(
     name
   )}&body=${encodeURIComponent(message)}%0D%0A%0D%0AFrom: ${encodeURIComponent(
     email

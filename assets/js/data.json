@@ -7,13 +7,18 @@
     "socialLinks": [
       {
         "platform": "LinkedIn",
-        "url": "#",
+        "url": "www.linkedin.com/in/muhamed-ibrahim-s-62994b243",
         "icon": "bx bxl-linkedin"
       },
       {
         "platform": "GitHub",
-        "url": "#",
+        "url": "https://github.com/Mohammadibbu",
         "icon": "bx bxl-github"
+      },
+      {
+        "platform": "Instagram",
+        "url": "https://www.instagram.com/__ibragii__/",
+        "icon": "bx bxl-instagram"
       }
     ],
     "profileImage": "assets/img/perfil.png"
