@@ -63,8 +63,8 @@ body.light-theme,
   --title-color: hsl(var(--second-hue), 20%, 20%);
   --text-color: hsl(var(--second-hue), 10%, 35%);
   --text-color-light: hsl(var(--second-hue), 6%, 55%);
-  --body-color: hsl(var(--second-hue), 100%, 98%);
-  --container-color: hsl(var(--second-hue), 50%, 96%);
+  --body-color: hsl(var(--first-hue), 40%, 95%);
+  --container-color: hsl(var(--first-hue), 20%, 98%);
 }
 
 /* Responsive typography */
@@ -422,7 +422,7 @@ img {
   background-color: var(--container-color);
   border-radius: 0.75rem;
   padding: 0.75rem 0.5rem;
-  box-shadow: -1px -1px 3px 0px var(--first-color-alt),
+  box-shadow: 1px 0px 1px 0px var(--first-color-alt),
     1px 1px 5px 0px var(--first-color);
 }
 
@@ -454,7 +454,7 @@ img {
   background-color: var(--container-color);
   padding: 1.5rem;
   border-radius: 1.25rem;
-  box-shadow: -1px -1px 3px 0px var(--first-color-alt),
+  box-shadow: 1px 0px 1px 0px var(--first-color-alt),
     1px 1px 5px 0px var(--first-color);
 }
 
@@ -520,7 +520,7 @@ img {
   flex-direction: column;
   align-items: space-around;
   justify-content: space-around;
-  box-shadow: -1px -1px 3px 0px var(--first-color-alt),
+  box-shadow: 1px 0px 1px 0px var(--first-color-alt),
     1px 1px 5px 0px var(--first-color);
   transition: 0.4s;
 }
@@ -590,7 +590,7 @@ img {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  box-shadow: -1px -1px 3px 0px var(--first-color-alt),
+  box-shadow: 1px 0px 1px 0px var(--first-color-alt),
     1px 1px 5px 0px var(--first-color);
   transition: 0.4s;
 }
@@ -657,7 +657,7 @@ img {
   align-items: center;
   justify-content: space-evenly;
   flex-direction: column;
-  box-shadow: -1px -1px 3px 0px var(--first-color-alt),
+  box-shadow: 1px 0px 1px 0px var(--first-color-alt),
     1px 1px 5px 0px var(--first-color);
 }
 
@@ -718,6 +718,8 @@ img {
   padding: 2rem 1rem;
   border-radius: 0.75rem;
   text-align: center;
+  box-shadow: 1px 0px 1px 0px var(--first-color-alt),
+    1px 1px 5px 0px var(--first-color);
 }
 
 .contact__card-icon {
