@@ -284,41 +284,71 @@ function loadEducation(EducationData) {
 }
 
 function loadProjects(projectData) {
-  const projectSection = document.querySelector("#project-section"); // Ensure this ID exists
+  const projectSection = document.querySelector("#project-section");
 
-  // Update Section Headers
+  // Section Headers
   const sectionHTML = `
     <span class="section__subtitle">${projectData.sectionTitle}</span>
     <h2 class="section__title">${projectData.sectionSubtitle}</h2>
-    
     <div class="work__container container grid" id="project-container"></div>
+    <div style="text-align:center; margin-top:2rem;">
+      <button id="toggle-btn" class="work__button">Show More</button>
+    </div>
   `;
 
   projectSection.innerHTML = sectionHTML;
 
-  // Render Projects
   const container = document.querySelector("#project-container");
+  const toggleBtn = document.querySelector("#toggle-btn");
 
-  const cardsHTML = projectData.projects
-    .map((project) => {
-      return `
-        <div class="work__card">
+  let visibleCount = 3;
+  const increment = 3;
+
+  function renderProjects() {
+    const visibleProjects = projectData.projects.slice(0, visibleCount);
+
+    container.innerHTML = visibleProjects
+      .map((project, index) => {
+        return `
+        <div class="work__card" style="animation-delay: ${index * 0.1}s;">
           <img src="${project.image}" alt="${project.title}" class="work__img">
           <h3 class="work__title">${project.title}</h3>
-         <div style="display: flex; justify-content: space-between;margin-top: 1rem;">
-          <a href="${project.knowMore}" target="_blank" class="work__button">
-            Know More <i class='bx bx-right-arrow work__icon'></i>
-          </a>
-          <a href="${project.link}" target="_blank" class="work__button">
-            Live <i class='bx bx-right-arrow work__icon'></i>
-          </a></div>
+          <div style="display: flex; justify-content: space-between;margin-top: 1rem;">
+            <a href="${project.knowMore}" target="_blank" class="work__button">
+              Know More <i class='bx bx-right-arrow work__icon'></i>
+            </a>
+            <a href="${project.link}" target="_blank" class="work__button">
+              Live <i class='bx bx-right-arrow work__icon'></i>
+            </a>
+          </div>
         </div>
       `;
-    })
-    .join("");
+      })
+      .join("");
 
-  container.innerHTML = cardsHTML;
+    toggleBtn.innerHTML =
+      visibleCount >= projectData.projects.length
+        ? `Show Less <i class='bx bx-chevron-up'></i>`
+        : `Show More <i class='bx bx-chevron-down'></i>`;
+  }
+
+  // Initial render
+  renderProjects();
+
+  // Button event
+  toggleBtn.addEventListener("click", () => {
+    if (visibleCount >= projectData.projects.length) {
+      // Reset to show only 3
+      visibleCount = 3;
+    } else {
+      // Show more
+      visibleCount += increment;
+    }
+
+    renderProjects();
+  });
 }
+
 // Function to load internships
 function loadInternships(internshipData) {
   const internshipSection = document.querySelector("#EXPERIENCE");

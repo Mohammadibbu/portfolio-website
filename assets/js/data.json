@@ -94,6 +94,13 @@
         "link": "https://anime-recommendation-engine-using-ml-khmb.onrender.com/"
       },
       {
+        "title": "Portfolio Website",
+        "description": "A personal portfolio website showcasing my skills, projects, and experiences. Built with HTML, CSS, and JavaScript.",
+        "image": "assets/img/PortfolioProject.png",
+        "knowMore": "https://github.com/Mohammadibbu/portfolio-website",
+        "link": "https://ibbu-portfolio.netlify.app/"
+      },
+      {
         "title": "GuessMaster",
         "description": "GuessMaster is an interactive web application that predicts the number you are thinking of! Through a series of four simple yes/no questions, the system uses your answers to determine the exact number you have in mind. ",
         "image": "assets/img/guessmaster.jpg",
@@ -114,6 +121,26 @@
 
         "knowMore": "https://github.com/Mohammadibbu/BloodDonation",
         "link": "https://mohammadibbu.github.io/BloodDonation/"
+      },
+      {
+        "title": "Password Strength Checker",
+
+        "description": "A web application that checks the strength of a password based on various criteria such as length, character variety, and common patterns.",
+
+        "image": "assets/img/PasswordStrengthChecker.png",
+
+        "knowMore": "https://github.com/Mohammadibbu/password-strength-checker",
+        "link": "https://mohammadibbu.github.io/password-strength-checker/"
+      },
+      {
+        "title": "Random Password Generator",
+
+        "description": "A web application that generates random passwords based on user-defined criteria such as length and character types. It ensures strong password creation for enhanced security.",
+
+        "image": "assets/img/RandomPasswordGenerator.jpg",
+
+        "knowMore": "https://github.com/Mohammadibbu/random-password-generator",
+        "link": "https://mohammadibbu.github.io/random-password-generator/"
       }
     ]
   },

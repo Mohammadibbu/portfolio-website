@@ -499,6 +499,32 @@ img {
 }
 
 /*=============== WORK ===============*/
+#toggle-btn {
+  background: none;
+  color: var(--first-color);
+
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+
+  box-shadow: none;
+}
+
+#toggle-btn i {
+  font-size: 1.25rem;
+  transition: transform 0.3s ease;
+}
+
+#toggle-btn:hover {
+  color: var(--first-color-alt);
+}
+
+#toggle-btn:hover i {
+  transform: translateY(2px);
+}
 
 .work__container {
   padding-top: 1rem;
