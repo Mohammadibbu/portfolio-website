@@ -56,7 +56,7 @@ body.dark-theme {
   --text-color-light: hsl(var(--first-hue), 4%, 55%);
   --body-color: hsl(var(--first-hue), 48%, 8%);
   --container-color: hsl(var(--first-hue), 32%, 12%);
-  transition-duration: 0.5s;
+  transition-duration: 1s;
 }
 body.light-theme,
 :root:not(.dark-theme) {
@@ -102,7 +102,7 @@ textarea {
 body {
   background-color: var(--body-color);
   color: var(--text-color);
-  transition: 0.4s; /* for light mode animation */
+  transition: 1s; /* for light mode animation */
 }
 
 h1,
