@@ -477,11 +477,15 @@ img {
   row-gap: 4.5rem;
   padding-top: 2rem;
   animation: fadeInUp 1s ease-out;
+  align-items: center;
+  justify-items: center;
 }
 
 .home__data {
   text-align: center;
   animation: fadeInLeft 0.8s ease-out 0.2s both;
+  max-width: 100%;
+  margin: 0 auto;
 }
 
 .home__greeting,
@@ -554,6 +558,7 @@ img {
   position: relative;
   animation: scaleIn 0.8s ease-out 0.4s both;
   transition: all 0.4s ease;
+  margin: 0 auto;
 }
 
 .home__handle::before {
@@ -583,6 +588,8 @@ img {
   align-items: center;
   gap: 1rem;
   animation: fadeInUp 0.8s ease-out 1s both;
+  flex-wrap: wrap;
+  margin-top: 1.5rem;
 }
 
 .home__social,
@@ -741,6 +748,8 @@ img {
 .about__container {
   row-gap: 2.5rem;
   animation: fadeInUp 0.8s ease-out;
+  align-items: center;
+  justify-items: center;
 }
 
 .about__img {
@@ -749,6 +758,8 @@ img {
   justify-self: center;
   transition: all 0.4s ease;
   animation: scaleIn 0.8s ease-out 0.2s both;
+  margin: 0 auto;
+  display: block;
 }
 
 .about__img:hover {
@@ -759,6 +770,8 @@ img {
 .about__data {
   text-align: center;
   animation: fadeInRight 0.8s ease-out 0.4s both;
+  max-width: 100%;
+  margin: 0 auto;
 }
 
 .about__info {
@@ -766,6 +779,8 @@ img {
   grid-template-columns: repeat(3, 1fr);
   gap: 0.5rem;
   margin-bottom: 2rem;
+  justify-items: center;
+  align-items: stretch;
 }
 
 .about__box {
@@ -777,6 +792,12 @@ img {
   position: relative;
   overflow: hidden;
   animation: bounceIn 0.6s ease-out calc(0.6s + var(--delay, 0s)) both;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 120px;
 }
 
 .about__box:nth-child(1) { --delay: 0s; }
@@ -834,6 +855,8 @@ img {
   row-gap: 2rem;
   padding-top: 1rem;
   animation: fadeInUp 0.8s ease-out;
+  justify-items: center;
+  align-items: start;
 }
 
 .skills__content {
@@ -845,6 +868,9 @@ img {
   position: relative;
   overflow: hidden;
   animation: scaleIn 0.6s ease-out calc(0.2s + var(--delay, 0s)) both;
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
 }
 
 .skills__content:nth-child(1) { --delay: 0s; }
@@ -891,12 +917,16 @@ img {
   display: flex;
   justify-content: center;
   column-gap: 2.5rem;
+  flex-wrap: wrap;
+  gap: 1.5rem;
 }
 
 .skills__group {
   display: grid;
   align-content: flex-start;
   row-gap: 1rem;
+  flex: 1;
+  min-width: 150px;
 }
 
 .skills__data {
@@ -995,6 +1025,11 @@ img {
 .work__container {
   padding-top: 1rem;
   animation: fadeInUp 0.8s ease-out;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  justify-items: center;
+  align-items: start;
 }
 
 .work__item {
@@ -1019,6 +1054,10 @@ img {
   position: relative;
   overflow: hidden;
   animation: scaleIn 0.6s ease-out calc(0.2s + var(--card-delay, 0s)) both;
+  width: 100%;
+  max-width: 350px;
+  margin: 0 auto;
+  min-height: 300px;
 }
 
 .work__card:nth-child(1) { --card-delay: 0s; }
@@ -1052,6 +1091,9 @@ img {
   border-radius: 1rem;
   margin-bottom: 0.75rem;
   transition: all 0.4s ease;
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
 }
 
 .work__card:hover .work__img {
@@ -1113,6 +1155,8 @@ img {
   gap: 1.5rem;
   padding-top: 1rem;
   animation: fadeInUp 0.8s ease-out;
+  justify-items: center;
+  align-items: stretch;
 }
 
 .internship__card {
@@ -1127,6 +1171,10 @@ img {
   position: relative;
   overflow: hidden;
   animation: scaleIn 0.6s ease-out calc(0.2s + var(--intern-delay, 0s)) both;
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+  min-height: 250px;
 }
 
 .internship__card:nth-child(1) { --intern-delay: 0s; }
@@ -1227,6 +1275,10 @@ img {
   position: relative;
   overflow: hidden;
   animation: scaleIn 0.6s ease-out calc(0.2s + var(--edu-delay, 0s)) both;
+  max-width: 500px;
+  margin: 0 auto 3rem auto;
+  text-align: center;
+  min-height: 200px;
 }
 
 .education__card:nth-child(1) { --edu-delay: 0s; }
@@ -1257,6 +1309,8 @@ img {
   border-radius: 3rem;
   margin-bottom: 1rem;
   transition: all 0.4s ease;
+  height: 80px;
+  object-fit: cover;
 }
 
 .education__card:hover .education__img {
@@ -1302,6 +1356,8 @@ img {
   row-gap: 3rem;
   padding-bottom: 3rem;
   animation: fadeInUp 0.8s ease-out;
+  justify-items: center;
+  align-items: start;
 }
 
 .contact__title {
@@ -1313,6 +1369,9 @@ img {
 .contact__info {
   display: grid;
   gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  justify-items: center;
+  width: 100%;
 }
 
 .contact__card {
@@ -1325,6 +1384,14 @@ img {
   position: relative;
   overflow: hidden;
   animation: bounceIn 0.6s ease-out calc(0.2s + var(--contact-delay, 0s)) both;
+  width: 100%;
+  max-width: 300px;
+  margin: 0 auto;
+  min-height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .contact__card:nth-child(1) { --contact-delay: 0s; }
@@ -1483,6 +1550,7 @@ img {
   position: relative;
   z-index: 1;
   animation: fadeInUp 0.8s ease-out;
+  text-align: center;
 }
 
 .footer__title,
@@ -1505,6 +1573,8 @@ img {
   column-gap: 1.5rem;
   margin-bottom: 2rem;
   animation: fadeInUp 0.6s ease-out 0.4s both;
+  flex-wrap: wrap;
+  gap: 1rem;
 }
 
 .footer__link:hover {
@@ -1518,6 +1588,8 @@ img {
   align-items: center;
   column-gap: 1.25rem;
   animation: fadeInUp 0.6s ease-out 0.6s both;
+  flex-wrap: wrap;
+  gap: 1rem;
 }
 
 .footer__social-link {
@@ -1637,6 +1709,7 @@ img {
 
   .home__button {
     flex-direction: column;
+    gap: 0.5rem;
   }
 
   .home__handle {
@@ -1650,10 +1723,18 @@ img {
 
   .about__info {
     grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+
+  .about__box {
+    padding: 1rem 0.5rem;
+    min-height: 100px;
   }
 
   .skills__box {
     column-gap: 1rem;
+    flex-direction: column;
+    gap: 1rem;
   }
 
   .skills__name {
@@ -1664,9 +1745,22 @@ img {
     font-size: var(--smaller-font-size);
   }
 
-  .services__container {
-    grid-template-columns: 145px;
-    justify-content: center;
+  .work__container {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .work__card {
+    max-width: 100%;
+  }
+
+  .contact__info {
+    grid-template-columns: 1fr;
+  }
+
+  .footer__list {
+    flex-direction: column;
+    gap: 0.5rem;
   }
 
   .work__item {
@@ -1698,27 +1792,38 @@ img {
     margin: 0 auto;
   }
 
+  .home__container {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    gap: 3rem;
+  }
+
   .about__info {
     grid-template-columns: repeat(3, 180px);
     justify-content: center;
+    gap: 1rem;
   }
 
   .about__description {
     padding: 1rem 5rem;
     width: 600px;
     margin: 0 auto 2rem auto;
+    max-width: 100%;
   }
 
   .about__box {
     padding: 1.75rem 0.95rem;
+    min-height: 140px;
   }
 
   .skills__container {
     justify-content: center;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 2rem;
   }
 
   .skills__content {
-    padding: 4rem 8.8rem;
+    padding: 2rem;
   }
 
   .skills__title {
@@ -1727,14 +1832,26 @@ img {
   }
 
   .skills__box {
-    column-gap: 5.5rem;
+    column-gap: 2rem;
   }
   
   .education__card {
     padding: 1.5rem 2rem;
     flex-direction: row;
+    text-align: left;
+    align-items: center;
+    gap: 2rem;
   }
-  
+
+  .education__img {
+    flex-shrink: 0;
+  }
+
+  .work__container {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+  }
+
   .services__container {
     grid-template-columns: repeat(3, 177px);
     justify-content: center;
@@ -1747,11 +1864,6 @@ img {
 
   .services__modal-description {
     padding: 0 3.5rem;
-  }
-
-  .work__container {
-    justify-content: center;
-    grid-template-columns: repeat(2, max-content);
   }
 
   .work__img {
@@ -1768,6 +1880,7 @@ img {
     grid-template-columns: 220px 340px;
     column-gap: 2rem;
     justify-content: center;
+    align-items: start;
   }
 
   .contact__info {
@@ -1777,6 +1890,7 @@ img {
 
   .contact__form {
     width: 340px;
+    max-width: 100%;
   }
 }
 
@@ -1797,6 +1911,22 @@ img {
 
   .nav {
     height: calc(var(--header-height) + 1rem);
+  }
+
+  .home__container {
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 4rem;
+  }
+
+  .home__data {
+    text-align: left;
+    order: 1;
+  }
+
+  .home__handle {
+    order: 2;
+    margin: 0;
   }
 
   .home__handle {
@@ -1829,6 +1959,7 @@ img {
 
   .about__img {
     width: 350px;
+    margin: 0;
   }
 
   .about__data {
@@ -1848,11 +1979,14 @@ img {
   .about__description {
     padding: 0 4rem 0 0;
     margin-bottom: 2.5rem;
+    width: auto;
+    max-width: none;
   }
 
   .skills__container {
     grid-template-columns: repeat(2, 460px);
     column-gap: 3rem;
+    justify-content: center;
   }
 
   .skills__title {
@@ -1862,6 +1996,7 @@ img {
   .education__card {
     padding: 1.5rem 2rem;
     flex-direction: row;
+    max-width: 600px;
   }
   
   .services__container {
@@ -1874,16 +2009,20 @@ img {
   }
 
   .work__container {
-    grid-template-columns: repeat(3, max-content);
+    grid-template-columns: repeat(3, 1fr);
     gap: 3rem;
+    max-width: 1200px;
+    margin: 0 auto;
   }
 
   .work__card {
     padding: 1.25rem;
+    max-width: none;
   }
 
   .work__img {
     margin-bottom: 2rem;
+    height: 200px;
   }
 
   .work__title {
@@ -1899,12 +2038,13 @@ img {
   }
 
   .contact__info {
-    grid-template-columns: 430px;
+    grid-template-columns: repeat(3, 1fr);
     gap: 1rem;
   }
 
   .contact__form {
     width: 430px;
+    max-width: 100%;
   }
 
   .contact__form-area {
@@ -1914,6 +2054,8 @@ img {
   .contact__container {
     grid-template-columns: repeat(2, 430px);
     column-gap: 6rem;
+    max-width: 1000px;
+    margin: 0 auto;
   }
 
   .footer__social-link {
