@@ -260,6 +260,83 @@ img {
   }
 }
 
+@keyframes slideInScale {
+  0% {
+    opacity: 0;
+    transform: translateY(30px) scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes morphBackground {
+  0%, 100% {
+    border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+  }
+  50% {
+    border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%;
+  }
+}
+
+@keyframes textGlow {
+  0%, 100% {
+    text-shadow: 0 0 5px var(--first-color);
+  }
+  50% {
+    text-shadow: 0 0 20px var(--first-color), 0 0 30px var(--first-color);
+  }
+}
+
+@keyframes cardHover {
+  0% {
+    transform: translateY(0) scale(1);
+    box-shadow: 0 4px 20px hsla(var(--first-hue), var(--sat), var(--lig), 0.1);
+  }
+  100% {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 20px 40px hsla(var(--first-hue), var(--sat), var(--lig), 0.3);
+  }
+}
+
+@keyframes ripple {
+  0% {
+    transform: scale(0);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+@keyframes typewriter {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes blink {
+  0%, 50% {
+    border-color: transparent;
+  }
+  51%, 100% {
+    border-color: var(--first-color);
+  }
+}
+
+@keyframes magneticHover {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  100% {
+    transform: translate(var(--x, 0), var(--y, 0)) scale(1.05);
+  }
+}
 /*=============== THEME ===============*/
 .change__theme {
   font-size: 1.25rem;
@@ -432,6 +509,7 @@ img {
   border-radius: 5rem;
   position: relative;
   overflow: hidden;
+  transform-origin: center;
 }
 
 .nav__link::before {
@@ -448,14 +526,31 @@ img {
   z-index: -1;
 }
 
+.nav__link::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+  transform: translateX(-100%);
+  transition: transform 0.6s ease;
+}
+
 .nav__link:hover::before {
   width: 40px;
   height: 40px;
 }
 
+.nav__link:hover::after {
+  transform: translateX(100%);
+}
+
 .nav__link:hover {
   color: #f3f0f0;
   transform: translateY(-3px) scale(1.1);
+  animation: pulse 0.6s ease-in-out;
 }
 
 /* Active link */
@@ -516,6 +611,15 @@ img {
   background-clip: text;
   animation: fadeInUp 0.8s ease-out 0.6s both;
   position: relative;
+  overflow: hidden;
+  white-space: nowrap;
+  border-right: 3px solid var(--first-color);
+  animation: typewriter 3s steps(20) 1s both, blink 1s infinite 4s;
+}
+
+.home__name.typing-complete {
+  border-right: none;
+  animation: textGlow 2s ease-in-out infinite;
 }
 
 .home__name::after {
@@ -559,6 +663,7 @@ img {
   animation: scaleIn 0.8s ease-out 0.4s both;
   transition: all 0.4s ease;
   margin: 0 auto;
+  animation: morphBackground 8s ease-in-out infinite, float 3s ease-in-out infinite;
 }
 
 .home__handle::before {
@@ -580,6 +685,7 @@ img {
 .home__handle:hover {
   transform: translateY(-10px) scale(1.02);
   box-shadow: 0 20px 40px hsla(var(--first-hue), var(--sat), var(--lig), 0.3);
+  animation-play-state: paused;
 }
 
 .home__button {
@@ -687,6 +793,7 @@ img {
   overflow: hidden;
   border: none;
   cursor: pointer;
+  transform-origin: center;
 }
 
 .button::before {
@@ -700,8 +807,27 @@ img {
   transition: left 0.5s ease;
 }
 
+.button::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255,255,255,0.3);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.3s ease, height 0.3s ease;
+}
+
 .button:hover::before {
   left: 100%;
+}
+
+.button:active::after {
+  width: 300px;
+  height: 300px;
+  animation: ripple 0.6s ease-out;
 }
 
 .button:hover {
@@ -709,6 +835,7 @@ img {
   color: var(--body-color);
   transform: translateY(-3px) scale(1.05);
   box-shadow: 0 10px 25px hsla(var(--first-hue), var(--sat), var(--lig), 0.4);
+  animation: pulse 0.6s ease-in-out;
 }
 
 .button:active {
@@ -798,6 +925,7 @@ img {
   align-items: center;
   justify-content: center;
   min-height: 120px;
+  transform-origin: center;
 }
 
 .about__box:nth-child(1) { --delay: 0s; }
@@ -815,13 +943,32 @@ img {
   transition: left 0.5s ease;
 }
 
+.about__box::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: conic-gradient(from 0deg, transparent, var(--first-color), transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  animation: spin 3s linear infinite;
+  z-index: -1;
+}
+
 .about__box:hover::before {
   left: 100%;
+}
+
+.about__box:hover::after {
+  opacity: 0.1;
 }
 
 .about__box:hover {
   transform: translateY(-10px) scale(1.05);
   box-shadow: 0 15px 30px hsla(var(--first-hue), var(--sat), var(--lig), 0.2);
+  animation: cardHover 0.3s ease-out forwards;
 }
 
 .about__icon {
@@ -1058,6 +1205,7 @@ img {
   max-width: 350px;
   margin: 0 auto;
   min-height: 300px;
+  transform-origin: center;
 }
 
 .work__card:nth-child(1) { --card-delay: 0s; }
@@ -1078,13 +1226,31 @@ img {
   transition: left 0.5s ease;
 }
 
+.work__card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, var(--first-color), var(--first-color-alt));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: -1;
+}
+
 .work__card:hover::before {
   left: 100%;
+}
+
+.work__card:hover::after {
+  opacity: 0.05;
 }
 
 .work__card:hover {
   transform: translateY(-10px) scale(1.02);
   box-shadow: 0 20px 40px hsla(var(--first-hue), var(--sat), var(--lig), 0.2);
+  animation: cardHover 0.3s ease-out forwards;
 }
 
 .work__img {
@@ -1392,6 +1558,7 @@ img {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  transform-origin: center;
 }
 
 .contact__card:nth-child(1) { --contact-delay: 0s; }
@@ -1409,13 +1576,33 @@ img {
   transition: left 0.5s ease;
 }
 
+.contact__card::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: radial-gradient(circle, var(--first-color), transparent);
+  transform: translate(-50%, -50%);
+  transition: width 0.4s ease, height 0.4s ease;
+  opacity: 0.1;
+  z-index: -1;
+}
+
 .contact__card:hover::before {
   left: 100%;
+}
+
+.contact__card:hover::after {
+  width: 200px;
+  height: 200px;
 }
 
 .contact__card:hover {
   transform: translateY(-8px) scale(1.02);
   box-shadow: 0 20px 40px hsla(var(--first-hue), var(--sat), var(--lig), 0.2);
+  animation: cardHover 0.3s ease-out forwards;
 }
 
 .contact__card-icon {
@@ -1502,6 +1689,8 @@ img {
 .contact__form-input:focus {
   border-color: var(--first-color);
   box-shadow: 0 0 10px hsla(var(--first-hue), var(--sat), var(--lig), 0.3);
+  transform: scale(1.02);
+  animation: pulse 0.3s ease-in-out;
 }
 
 .contact__form-tag {
@@ -1653,12 +1842,14 @@ img {
   z-index: var(--z-tooltip);
   transition: all 0.4s ease;
   animation: float 3s ease-in-out infinite;
+  transform-origin: center;
 }
 
 .scrollup:hover {
   background: linear-gradient(135deg, var(--first-color-alt), var(--first-color));
   opacity: 1;
   transform: translateY(-5px) scale(1.1);
+  animation: pulse 0.6s ease-in-out infinite;
 }
 
 .scrollup__icon {
@@ -1701,6 +1892,104 @@ img {
 }
 
 /*=============== BREAKPOINTS ===============*/
+
+/*=============== MAGNETIC CURSOR EFFECT ===============*/
+.magnetic {
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.magnetic:hover {
+  animation: magneticHover 0.3s ease-out forwards;
+}
+
+/*=============== GLASS MORPHISM EFFECTS ===============*/
+.glass-effect {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/*=============== PARTICLE BACKGROUND ===============*/
+.particles {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: -1;
+}
+
+.particle {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: var(--first-color);
+  border-radius: 50%;
+  opacity: 0.3;
+  animation: float 6s ease-in-out infinite;
+}
+
+.particle:nth-child(1) { left: 10%; animation-delay: 0s; }
+.particle:nth-child(2) { left: 20%; animation-delay: 1s; }
+.particle:nth-child(3) { left: 30%; animation-delay: 2s; }
+.particle:nth-child(4) { left: 40%; animation-delay: 3s; }
+.particle:nth-child(5) { left: 50%; animation-delay: 4s; }
+.particle:nth-child(6) { left: 60%; animation-delay: 5s; }
+.particle:nth-child(7) { left: 70%; animation-delay: 0.5s; }
+.particle:nth-child(8) { left: 80%; animation-delay: 1.5s; }
+.particle:nth-child(9) { left: 90%; animation-delay: 2.5s; }
+.particle:nth-child(10) { left: 95%; animation-delay: 3.5s; }
+
+/*=============== LOADING SCREEN ===============*/
+.loading-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--body-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+.loading-screen.hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.loader {
+  width: 60px;
+  height: 60px;
+  border: 3px solid var(--container-color);
+  border-top: 3px solid var(--first-color);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  position: relative;
+}
+
+.loader::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 30px;
+  height: 30px;
+  border: 2px solid transparent;
+  border-top: 2px solid var(--first-color-alt);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  animation: spin 0.5s linear infinite reverse;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
 /* For small devices */
 @media screen and (max-width: 320px) {
   .nav__menu {

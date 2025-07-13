@@ -1,19 +1,19 @@
 window.addEventListener("load", () => {
   const root = document.documentElement;
   
-  // Add loading screen
+  // Enhanced loading screen
   const loadingScreen = document.createElement('div');
-  loadingScreen.className = 'loading';
-  loadingScreen.innerHTML = '<div class="loading__spinner"></div>';
+  loadingScreen.className = 'loading-screen';
+  loadingScreen.innerHTML = '<div class="loader"></div>';
   document.body.appendChild(loadingScreen);
   
   // Remove loading screen after content loads
   setTimeout(() => {
-    loadingScreen.style.opacity = '0';
+    loadingScreen.classList.add('hidden');
     setTimeout(() => {
       loadingScreen.remove();
     }, 500);
-  }, 1500);
+  }, 2000);
 
   function updateColors() {
     const firstHue = Math.floor(Math.random() * 360);
@@ -41,6 +41,14 @@ const observer = new IntersectionObserver((entries) => {
     if (entry.isIntersecting) {
       entry.target.style.animationPlayState = 'running';
       entry.target.classList.add('animate-in');
+      
+      // Add staggered animation to child elements
+      const children = entry.target.querySelectorAll('.work__card, .about__box, .contact__card, .skills__data');
+      children.forEach((child, index) => {
+        setTimeout(() => {
+          child.style.animation = `slideInScale 0.6s ease-out forwards`;
+        }, index * 100);
+      });
     }
   });
 }, observerOptions);
@@ -90,12 +98,19 @@ window.addEventListener('scroll', () => {
 function typeWriter(element, text, speed = 100) {
   let i = 0;
   element.innerHTML = '';
+  element.style.borderRight = '3px solid var(--first-color)';
   
   function type() {
     if (i < text.length) {
       element.innerHTML += text.charAt(i);
       i++;
       setTimeout(type, speed);
+    } else {
+      // Typing complete, add glow effect
+      setTimeout(() => {
+        element.style.borderRight = 'none';
+        element.classList.add('typing-complete');
+      }, 1000);
     }
   }
   type();
@@ -115,16 +130,42 @@ document.addEventListener('DOMContentLoaded', () => {
   const buttons = document.querySelectorAll('.button, .toggle-btn');
   
   buttons.forEach(button => {
+    // Add magnetic effect
+    button.classList.add('magnetic');
+    
+    button.addEventListener('mousemove', function(e) {
+      const rect = this.getBoundingClientRect();
+      const x = e.clientX - rect.left - rect.width / 2;
+      const y = e.clientY - rect.top - rect.height / 2;
+      
+      this.style.setProperty('--x', `${x * 0.1}px`);
+      this.style.setProperty('--y', `${y * 0.1}px`);
+    });
+    
     button.addEventListener('mouseenter', function() {
       this.style.transform = 'translateY(-3px) scale(1.05)';
     });
     
     button.addEventListener('mouseleave', function() {
       this.style.transform = 'translateY(0) scale(1)';
+      this.style.setProperty('--x', '0px');
+      this.style.setProperty('--y', '0px');
     });
     
     button.addEventListener('mousedown', function() {
       this.style.transform = 'translateY(-1px) scale(1.02)';
+      // Create ripple effect
+      const ripple = document.createElement('span');
+      ripple.style.cssText = `
+        position: absolute;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.6);
+        transform: scale(0);
+        animation: ripple 0.6s linear;
+        pointer-events: none;
+      `;
+      this.appendChild(ripple);
+      setTimeout(() => ripple.remove(), 600);
     });
     
     button.addEventListener('mouseup', function() {
@@ -133,46 +174,57 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-// Enhanced cursor trail effect
+// Enhanced cursor trail effect with particles
 let mouseX = 0, mouseY = 0;
 let trailX = 0, trailY = 0;
+const trails = [];
 
 document.addEventListener('mousemove', (e) => {
   mouseX = e.clientX;
   mouseY = e.clientY;
+  
+  // Create trail particles
+  if (Math.random() > 0.8) {
+    createTrailParticle(mouseX, mouseY);
+  }
 });
 
-function animateTrail() {
-  trailX += (mouseX - trailX) * 0.1;
-  trailY += (mouseY - trailY) * 0.1;
-  
-  const trail = document.querySelector('.cursor-trail');
-  if (trail) {
-    trail.style.left = trailX + 'px';
-    trail.style.top = trailY + 'px';
-  }
-  
-  requestAnimationFrame(animateTrail);
-}
-
-// Add cursor trail element
-document.addEventListener('DOMContentLoaded', () => {
-  const trail = document.createElement('div');
-  trail.className = 'cursor-trail';
-  trail.style.cssText = `
+function createTrailParticle(x, y) {
+  const particle = document.createElement('div');
+  particle.style.cssText = `
     position: fixed;
-    width: 20px;
-    height: 20px;
-    background: radial-gradient(circle, var(--first-color), transparent);
+    left: ${x}px;
+    top: ${y}px;
+    width: 4px;
+    height: 4px;
+    background: var(--first-color);
     border-radius: 50%;
     pointer-events: none;
     z-index: 9999;
-    opacity: 0.6;
-    transition: opacity 0.3s ease;
+    opacity: 0.8;
+    transform: translate(-50%, -50%);
+    animation: fadeOut 1s ease-out forwards;
   `;
-  document.body.appendChild(trail);
-  animateTrail();
-});
+  
+  document.body.appendChild(particle);
+  setTimeout(() => particle.remove(), 1000);
+}
+
+// Add CSS for fadeOut animation
+const style = document.createElement('style');
+style.textContent = `
+  @keyframes fadeOut {
+    0% {
+      opacity: 0.8;
+      transform: translate(-50%, -50%) scale(1);
+    }
+    100% {
+      opacity: 0;
+      transform: translate(-50%, -50%) scale(0);
+    }
+  }
+`;
+document.head.appendChild(style);
 
 const themeToggle = document.querySelector("#theme-button");
 const body = document.body;
@@ -271,6 +323,13 @@ async function fetchData() {
 function loadHome(homeData) {
   const home = document.querySelector("#home");
 
+  // Add particles background
+  const particlesHTML = `
+    <div class="particles">
+      ${Array.from({length: 10}, (_, i) => `<div class="particle"></div>`).join('')}
+    </div>
+  `;
+
   // Enhanced social links with stagger animation
   const socialLinksHTML = homeData.socialLinks
     .map(
@@ -284,6 +343,7 @@ function loadHome(homeData) {
   console.log(socialLinksHTML);
 
   home.innerHTML = `
+    ${particlesHTML}
     <div class="home__container container grid">
       <div class="home__data">
         <span class="home__greeting">${homeData.greeting}</span>
