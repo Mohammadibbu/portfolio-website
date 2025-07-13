@@ -197,21 +197,53 @@
     ]
   },
 
-  "certificates": {
+  "certification": {
     "sectionTitle": "My Certificates",
     "sectionSubtitle": "My Achievements",
     "certificates": [
       {
-        "title": "Certificate 1",
-        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-        "image": "assets/img/certificate1.png",
-        "link": "#"
+        "title": "Magic Bus - Connect with Work Programme",
+        "description": "Completed a skill-building programme focused on communication, adaptability, digital skills, and interview preparation.",
+
+        "link": "https://drive.google.com/file/d/1AplaT7lM_CpvrDeyt9LCHQEUMfXuyACV/view?usp=drive_link"
+      },
+
+      {
+        "title": "HTML5 - The Language (Infosys Springboard)",
+        "description": "Completed a course on HTML5 fundamentals, enhancing web development and markup skills.",
+
+        "link": "https://drive.google.com/file/d/1B5IBlCa6KBkTRHtMJfhLH1UWTSKfInYA/view?usp=drive_link"
+      },
+
+      {
+        "title": "Flask Python (Great Learning)",
+        "description": "Completed a free online course on Flask Python fundamentals and web development.",
+
+        "link": "https://drive.google.com/file/d/1BSYH_oL9XNoXxOBzNuXVKfneE3VslHNu/view?usp=drive_link"
       },
       {
-        "title": "Certificate 2",
-        "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-        "image": "assets/img/certificate2.png",
-        "link": "#"
+        "title": "JavaScript Projects (Great Learning)",
+        "description": "Built interactive projects using JavaScript through Great Learning, focusing on DOM, APIs, and responsive UIs.",
+
+        "link": "https://drive.google.com/file/d/1BWV1S_gNsxaTzhfV5YCm032sJcPDeqmU/view?usp=drive_link"
+      },
+      {
+        "title": "UI/UX Basics (Great Learning)",
+        "description": "Completed a fundamentals course on UI/UX design with Great Learning, applying user-centered design and prototyping.",
+
+        "link": "https://drive.google.com/file/d/1BW88YEmu3YTS-j8wCrM7ty6eizfMjtIq/view?usp=drive_link"
+      },
+      {
+        "title": "Cyber Security & Digital Safety Essentials",
+        "description": "Completed 3 hours of training on cyber security fundamentals and digital safety practices.",
+
+        "link": "https://drive.google.com/file/d/1BE36YRv-dBjk7MKb_ePLi332GOoSr7uK/view?usp=drive_link"
+      },
+      {
+        "title": "Microsoft Excel Beginners (Naan Mudhalvan & Microsoft)",
+        "description": "Completed digital training on Microsoft Excel basics, building essential spreadsheet and data skills.",
+
+        "link": "https://drive.google.com/file/d/1BGsgVOBzM2HcMVhHOZkIFQ19KC5rDO0-/view?usp=drive_link"
       }
     ]
   }

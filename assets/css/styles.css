@@ -499,7 +499,7 @@ img {
 }
 
 /*=============== WORK ===============*/
-#toggle-btn {
+.toggle-btn {
   background: none;
   color: var(--first-color);
 
@@ -513,16 +513,16 @@ img {
   box-shadow: none;
 }
 
-#toggle-btn i {
+.toggle-btn i {
   font-size: 1.25rem;
   transition: transform 0.3s ease;
 }
 
-#toggle-btn:hover {
+.toggle-btn:hover {
   color: var(--first-color-alt);
 }
 
-#toggle-btn:hover i {
+.toggle-btn:hover i {
   transform: translateY(2px);
 }
 

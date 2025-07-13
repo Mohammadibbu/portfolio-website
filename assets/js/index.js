@@ -95,6 +95,7 @@ async function fetchData() {
     loadEducation(jsonData.Education);
     loadProjects(jsonData.projects);
     loadInternships(jsonData.internshipExperience);
+    loadcertification(jsonData.certification);
   } catch (error) {
     console.error("There was an error:", error);
   }
@@ -292,7 +293,7 @@ function loadProjects(projectData) {
     <h2 class="section__title">${projectData.sectionSubtitle}</h2>
     <div class="work__container container grid" id="project-container"></div>
     <div style="text-align:center; margin-top:2rem;">
-      <button id="toggle-btn" class="work__button">Show More</button>
+      <button id="toggle-btn" class="toggle-btn">Show More</button>
     </div>
   `;
 
@@ -378,6 +379,72 @@ function loadInternships(internshipData) {
       ${internshipsHTML}
     </div>
   `;
+}
+function loadcertification(certificationData) {
+  const certificationSection = document.querySelector("#CERTIFICATION");
+
+  // Render section headers and containers
+  const sectionHTML = `
+    <span class="section__subtitle">${certificationData.sectionSubtitle}</span>
+    <h2 class="section__title">${certificationData.sectionTitle}</h2>
+    <div class="internship__container container grid" id="certification-container"></div>
+    <div style="text-align:center; margin-top:2rem;">
+      <button id="cert-toggle-btn" class="toggle-btn">Show More</button>
+    </div>
+  `;
+
+  certificationSection.innerHTML = sectionHTML;
+
+  const container = document.querySelector("#certification-container");
+  const toggleBtn = document.querySelector("#cert-toggle-btn");
+
+  let visibleCount = 3;
+  const increment = 3;
+
+  function renderCertificates() {
+    const visibleCertificates = certificationData.certificates.slice(
+      0,
+      visibleCount
+    );
+
+    container.innerHTML = visibleCertificates
+      .map(
+        (certificate, index) => `
+        <div class="internship__card" style="animation-delay: ${index * 0.1}s;">
+         
+          <h3 class="internship__company">${certificate.title}</h3>
+          <p class="internship__description">${certificate.description}</p>
+          <div style="margin-top: 1rem;">
+            <a href="${
+              certificate.link
+            }" class="internship__button" target="_blank">
+              View Certificate <i class='bx bx-link-external internship__icon'></i>
+            </a>
+          </div>
+        </div>
+      `
+      )
+      .join("");
+
+    toggleBtn.innerHTML =
+      visibleCount >= certificationData.certificates.length
+        ? `Show Less <i class='bx bx-chevron-up'></i>`
+        : `Show More <i class='bx bx-chevron-down'></i>`;
+  }
+
+  // Initial render
+  renderCertificates();
+
+  // Toggle button event
+  toggleBtn.addEventListener("click", () => {
+    if (visibleCount >= certificationData.certificates.length) {
+      visibleCount = 3; // Reset
+    } else {
+      visibleCount += increment; // Show more
+    }
+
+    renderCertificates();
+  });
 }
 
 // Call the fetchData function to start everything
