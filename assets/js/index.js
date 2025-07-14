@@ -497,3 +497,130 @@ ScrollReveal().reveal(".experience", { origin: "top", delay: 500 });
 ScrollReveal().reveal(".work", { origin: "bottom", delay: 600 });
 ScrollReveal().reveal(".contact__content", { origin: "left", delay: 700 });
 ScrollReveal().reveal(".footer__container", { origin: "bottom", delay: 800 });
+
+// Custom cursor functionality
+const cursor = document.querySelector(".cursor");
+const follower = document.querySelector(".cursor-follower");
+const hoverTargets = document.querySelectorAll(".hover-target");
+const buttons = document.querySelectorAll(".button, .toggle-btn");
+
+let posX = 0,
+  posY = 0;
+let mouseX = 0,
+  mouseY = 0;
+
+document.addEventListener("mousemove", (e) => {
+  mouseX = e.clientX;
+  mouseY = e.clientY;
+  cursor.style.left = mouseX + "px";
+  cursor.style.top = mouseY + "px";
+
+  // Randomly create trail particles
+  if (Math.random() > 0.8) createTrailParticle(mouseX, mouseY);
+});
+
+function animate() {
+  posX += (mouseX - posX) / 8;
+  posY += (mouseY - posY) / 8;
+  follower.style.left = posX + "px";
+  follower.style.top = posY + "px";
+  requestAnimationFrame(animate);
+}
+animate();
+
+// Hover effects on targets
+hoverTargets.forEach((target) => {
+  target.addEventListener("mouseenter", () => {
+    follower.style.transform = "scale(2)";
+    follower.style.borderColor = getComputedStyle(
+      document.documentElement
+    ).getPropertyValue("--first-color-alt");
+  });
+  target.addEventListener("mouseleave", () => {
+    follower.style.transform = "scale(1)";
+    follower.style.borderColor = getComputedStyle(
+      document.documentElement
+    ).getPropertyValue("--first-color");
+  });
+});
+
+// Button magnetic and ripple effects
+buttons.forEach((button) => {
+  button.classList.add("magnetic");
+
+  button.addEventListener("mousemove", (e) => {
+    const rect = button.getBoundingClientRect();
+    const x = e.clientX - rect.left - rect.width / 2;
+    const y = e.clientY - rect.top - rect.height / 2;
+    button.style.setProperty("--x", `${x * 0.1}px`);
+    button.style.setProperty("--y", `${y * 0.1}px`);
+  });
+
+  button.addEventListener("mouseenter", () => {
+    button.style.transform = "translateY(-3px) scale(1.05)";
+  });
+
+  button.addEventListener("mouseleave", () => {
+    button.style.transform = "translateY(0) scale(1)";
+    button.style.setProperty("--x", "0px");
+    button.style.setProperty("--y", "0px");
+  });
+
+  button.addEventListener("mousedown", () => {
+    button.style.transform = "translateY(-1px) scale(1.02)";
+    const ripple = document.createElement("span");
+    ripple.style.cssText = `
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.6);
+      transform: scale(0);
+      animation: ripple 0.6s linear;
+      pointer-events: none;
+    `;
+    button.appendChild(ripple);
+    setTimeout(() => ripple.remove(), 600);
+  });
+
+  button.addEventListener("mouseup", () => {
+    button.style.transform = "translateY(-3px) scale(1.05)";
+  });
+});
+
+function createTrailParticle(x, y) {
+  const particle = document.createElement("div");
+  particle.style.cssText = `
+    position: fixed;
+    left: ${x}px;
+    top: ${y}px;
+    width: 4px;
+    height: 4px;
+    background: var(--first-color);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.8;
+    transform: translate(-50%, -50%);
+    animation: fadeOut 1s ease-out forwards;
+  `;
+  document.body.appendChild(particle);
+  setTimeout(() => particle.remove(), 1000);
+}
+
+// Append keyframes style only once
+if (!document.getElementById("fadeOut-style")) {
+  const style = document.createElement("style");
+  style.id = "fadeOut-style";
+  style.textContent = `
+    @keyframes fadeOut {
+      0% {
+        opacity: 0.8;
+        transform: translate(-50%, -50%) scale(1);
+      }
+      100% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0);
+      }
+    }
+  `;
+  document.head.appendChild(style);
+}
