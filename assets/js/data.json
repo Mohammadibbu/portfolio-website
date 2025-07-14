@@ -104,8 +104,8 @@
         "title": "Mind Reader",
         "description": "Mind Reader is an interactive web application that predicts the number you are thinking of! Through a series of four simple yes/no questions, the system uses your answers to determine the exact number you have in mind. ",
         "image": "assets/img/guessmaster.jpg",
-        "knowMore": "https://github.com/Mohammadibbu/GuessMaster",
-        "link": "https://mohammadibbu.github.io/GuessMaster/"
+        "knowMore": "https://github.com/Mohammadibbu/MindReader",
+        "link": "https://mohammadibbu.github.io/MindReader/"
       },
       {
         "title": "RTO Finder",
