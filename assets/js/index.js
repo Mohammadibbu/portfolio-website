@@ -314,6 +314,7 @@ function loadProjects(projectData) {
         <div class="work__card" style="animation-delay: ${index * 0.1}s;">
           <img src="${project.image}" alt="${project.title}" class="work__img">
           <h3 class="work__title">${project.title}</h3>
+
           <div style="display: flex; justify-content: space-between;margin-top: 1rem;">
             <a href="${project.knowMore}" target="_blank" class="work__button">
               Know More <i class='bx bx-right-arrow work__icon'></i>
