@@ -202,13 +202,6 @@
     "sectionSubtitle": "My Achievements",
     "certificates": [
       {
-        "title": "Magic Bus - Connect with Work Programme",
-        "description": "Completed a skill-building programme focused on communication, adaptability, digital skills, and interview preparation.",
-
-        "link": "https://drive.google.com/file/d/1AplaT7lM_CpvrDeyt9LCHQEUMfXuyACV/view?usp=drive_link"
-      },
-
-      {
         "title": "HTML5 - The Language (Infosys Springboard)",
         "description": "Completed a course on HTML5 fundamentals, enhancing web development and markup skills.",
 
@@ -226,6 +219,12 @@
         "description": "Built interactive projects using JavaScript through Great Learning, focusing on DOM, APIs, and responsive UIs.",
 
         "link": "https://drive.google.com/file/d/1BWV1S_gNsxaTzhfV5YCm032sJcPDeqmU/view?usp=drive_link"
+      },
+      {
+        "title": "Magic Bus - Connect with Work Programme",
+        "description": "Completed a skill-building programme focused on communication, adaptability, digital skills, and interview preparation.",
+
+        "link": "https://drive.google.com/file/d/1AplaT7lM_CpvrDeyt9LCHQEUMfXuyACV/view?usp=drive_link"
       },
       {
         "title": "UI/UX Basics (Great Learning)",
