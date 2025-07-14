@@ -317,6 +317,43 @@ img {
 }
 /*========== Variables light theme ==========*/
 
+/*=============== SCROLL TO TOP ===============*/
+.scrollup {
+  position: fixed;
+  right: 1rem;
+  bottom: -20%;
+  background: linear-gradient(
+    135deg,
+    var(--first-color),
+    var(--first-color-alt)
+  );
+  opacity: 0.8;
+  padding: 0.3rem;
+  border-radius: 0.4rem;
+  z-index: var(--z-tooltip);
+  transition: all 0.4s ease;
+  animation: float 3s ease-in-out infinite;
+}
+
+.scrollup:hover {
+  background: linear-gradient(
+    135deg,
+    var(--first-color-alt),
+    var(--first-color)
+  );
+  opacity: 1;
+  transform: translateY(-5px) scale(1.1);
+}
+
+.scrollup__icon {
+  font-size: 1.5rem;
+  color: var(--body-color);
+}
+
+/* Show scroll */
+.show-scroll {
+  bottom: 5rem;
+}
 /*=============== REUSABLE CSS CLASSES ===============*/
 .container {
   max-width: 968px;

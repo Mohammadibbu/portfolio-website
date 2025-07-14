@@ -45,7 +45,25 @@ const sections = Array.from(navLinks).map((link) => {
   const href = link.getAttribute("href");
   return document.querySelector(href);
 });
+// Scroll to section on link click
+window.addEventListener("scroll", () => {
+  const scrollUp = document.getElementById("scroll-up");
 
+  if (window.scrollY >= 200) {
+    scrollUp.classList.add("show-scroll");
+  } else {
+    scrollUp.classList.remove("show-scroll");
+  }
+});
+
+// Scroll to section on link click
+document.getElementById("scroll-up").addEventListener("click", function (e) {
+  e.preventDefault();
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth",
+  });
+});
 function onScroll() {
   const scrollY = window.pageYOffset;
 
@@ -503,6 +521,16 @@ const cursor = document.querySelector(".cursor");
 const follower = document.querySelector(".cursor-follower");
 const hoverTargets = document.querySelectorAll(".hover-target");
 const buttons = document.querySelectorAll(".button, .toggle-btn");
+
+if (window.matchMedia("(pointer: coarse)").matches) {
+  // Disable custom cursor effects for touch devices
+  cursor.style.display = "none";
+  follower.style.display = "none";
+} else {
+  // Enable custom cursor effects for non-touch devices
+  cursor.style.display = "block";
+  follower.style.display = "block";
+}
 
 let posX = 0,
   posY = 0;
