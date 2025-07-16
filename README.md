@@ -30,12 +30,12 @@ Check out the live site here:
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/yourusername/ibbu-portfolio.git
+   git clone https://github.com/Mohammadibbu/portfolio-website.git
    ```
 2. Enter the project folder:
 
    ```bash
-   cd ibbu-portfolio
+   cd portfolio-website
    ```
 3. Open `index.html` in your browser.
 
