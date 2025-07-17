@@ -611,7 +611,6 @@ img {
   width: 160px;
   width: 160px;
   transition: all 0.4s ease;
-  animation: float 3s ease-in-out infinite;
 }
 
 .home__img:hover {
@@ -636,6 +635,7 @@ img {
   position: relative;
   animation: scaleIn 0.8s ease-out 0.4s both;
   transition: all 0.4s ease;
+  animation: float 3s ease-in-out infinite;
 }
 
 .home__handle::before {

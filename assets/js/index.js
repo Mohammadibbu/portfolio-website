@@ -14,6 +14,10 @@ window.addEventListener("load", () => {
   }
 
   updateColors(); // initial call
+
+  document
+    .getElementById("updatecolors")
+    .addEventListener("click", () => location.reload());
 });
 
 const themeToggle = document.querySelector("#theme-button");
