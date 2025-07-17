@@ -1212,7 +1212,7 @@ img {
   border-radius: 1rem;
   margin-bottom: 0.75rem;
   transition: all 0.4s ease;
-  height: 130px;
+  height: 160px;
 }
 
 .work__card:hover .work__img {
@@ -1883,6 +1883,7 @@ img {
   }
 
   .work__img {
+    height: 130px;
     width: 165px;
   }
 }
@@ -1951,6 +1952,7 @@ img {
   }
 
   .work__img {
+    height: 130px;
     width: 250px;
   }
 
