@@ -180,6 +180,12 @@
         "institution": "Apollo Arts And Science College, Poonamallee",
         "duration": "July 2020 – Apr 2023",
         "cgpa": "7.7"
+      },
+      {
+        "image": "assets/img/keralavidyalayam.png",
+        "degree": "SSLC, HSC - I & HSC - II",
+        "institution": "Kerala Vidyalayam Higher Secondary School, Chennai",
+        "duration": "June 2017 – April 2020"
       }
     ]
   },
