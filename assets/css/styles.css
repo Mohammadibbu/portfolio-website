@@ -430,6 +430,35 @@ img {
   letter-spacing: 2px;
   margin-bottom: 0.5rem;
 }
+/*=============== RED DOT INDICATOR ===============*/
+/* Red dot indicator */
+.red-dot {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  height: 12px;
+  width: 12px;
+  background-color: red;
+  border-radius: 50%;
+  animation: pulse 1.5s infinite;
+  box-shadow: 0 0 0 rgba(255, 0, 0, 0.5);
+}
+
+/* Animation */
+@keyframes pulse {
+  0% {
+    transform: scale(0.9);
+    opacity: 0.7;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0.9);
+    opacity: 0.7;
+  }
+}
 
 /*=============== HEADER & NAV===============*/
 .header {

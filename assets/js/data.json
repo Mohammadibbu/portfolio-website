@@ -80,13 +80,6 @@
     "sectionSubtitle": "My Projects",
     "projects": [
       {
-        "title": "PG Result Management System (UNOM)",
-        "description": "A web system developed to automate result management for postgraduate students using Node.js, MySQL, Handlebars, and Bootstrap.",
-        "image": "assets/img/Pgresult.png",
-        "knowMore": "https://github.com/Mohammadibbu/Result-management",
-        "link": "https://github.com/Mohammadibbu/Result-management"
-      },
-      {
         "title": "Anime Recommendation Engine",
         "description": "Built using Python, Flask, scikit-learn, and Firebase to suggest anime based on user preferences with cosine similarity.",
         "image": "assets/img/anime.png",
@@ -106,6 +99,21 @@
         "image": "assets/img/guessmaster.jpg",
         "knowMore": "https://github.com/Mohammadibbu/MindReader",
         "link": "https://mohammadibbu.github.io/MindReader/"
+      },
+
+      {
+        "title": "IBBU Chatbot - Built with Chatling AI",
+        "description": "A personal AI chatbot that assists with resume-related queries, built using Chatling AI. It provides instant responses to questions about my resume, skills, and experiences.",
+        "image": "assets/img/Chatbot.png",
+        "knowMore": "https://share.chatling.ai/s/59k265GmL56vvrm",
+        "link": "https://share.chatling.ai/s/59k265GmL56vvrm"
+      },
+      {
+        "title": "PG Result Management System (UNOM)",
+        "description": "A web system developed to automate result management for postgraduate students using Node.js, MySQL, Handlebars, and Bootstrap.",
+        "image": "assets/img/Pgresult.png",
+        "knowMore": "https://github.com/Mohammadibbu/Result-management",
+        "link": "https://github.com/Mohammadibbu/Result-management"
       },
       {
         "title": "RTO Finder",

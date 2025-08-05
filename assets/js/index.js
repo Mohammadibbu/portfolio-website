@@ -332,16 +332,23 @@ function loadProjects(projectData) {
 
     container.innerHTML = visibleProjects
       .map((project, index) => {
+        const alertAttr = project.link.includes("59k265GmL56vvrm")
+          ? `onclick="alert('The chatbot have been protected\\npassword : reverse(654321)')"`
+          : "";
         return `
         <div class="work__card" style="animation-delay: ${index * 0.1}s;">
           <img src="${project.image}" alt="${project.title}" class="work__img">
           <h3 class="work__title">${project.title}</h3>
 
           <div style="display: flex; justify-content: space-between;margin-top: 1rem;">
-            <a href="${project.knowMore}" target="_blank" class="work__button">
+            <a href="${
+              project.knowMore
+            }" ${alertAttr} target="_blank" class="work__button">
               Know More <i class='bx bx-right-arrow work__icon'></i>
             </a>
-            <a href="${project.link}" target="_blank" class="work__button">
+            <a href="${
+              project.link
+            }" ${alertAttr} target="_blank" class="work__button">
               Live <i class='bx bx-right-arrow work__icon'></i>
             </a>
           </div>
