@@ -21,6 +21,10 @@ window.addEventListener("load", () => {
     .addEventListener("click", () => location.reload());
 });
 function animateCountUp(element, target, duration = 1000) {
+  if (!element || isNaN(target) || target < 1) {
+    console.error("Invalid element or target value for count up animation.");
+    return;
+  }
   const start = 0;
   const range = target - start;
   const increment = target > start ? 1 : -1;
