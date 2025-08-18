@@ -434,14 +434,15 @@ img {
 /* Red dot indicator */
 .visitor-badge {
   position: fixed;
-  bottom: 1rem;
+  bottom: 5rem;
   left: 0.5rem;
-
-  z-index: 91319;
+  z-index: 9999;
   display: inline-flex;
   align-items: center;
   gap: 5px;
-  padding: 5px 10px;
+  padding: 0 5px;
+  border: 1px solid var(--body-color);
+
   background: var(--first-color);
   color: var(--body-color);
   border-radius: 20px;
@@ -450,7 +451,6 @@ img {
   cursor: pointer;
   transition: all 0.3s ease;
   box-shadow: 0 4px 12px hsla(var(--first-hue), var(--sat), var(--lig), 0.3);
-  border: 2px solid var(--body-color);
 
   animation: float 3s cubic-bezier(0.4, 0.4, 0.9, 1) infinite;
 }
@@ -1878,7 +1878,11 @@ img {
   .nav__menu {
     padding: 1rem 1.5rem;
   }
-
+  .visitor-badge {
+    bottom: 5rem;
+    padding: 0 5px;
+    border: 1px solid var(--body-color);
+  }
   .home__button {
     flex-direction: column;
   }
@@ -1942,7 +1946,11 @@ img {
     right: 0;
     margin: 0 auto;
   }
-
+  .visitor-badge {
+    bottom: 1rem;
+    padding: 5px 10px;
+    border: 2px solid var(--body-color);
+  }
   .about__info {
     grid-template-columns: repeat(3, 180px);
     justify-content: center;
@@ -2054,7 +2062,11 @@ img {
     margin-left: auto;
     margin-right: auto;
   }
-
+  .visitor-badge {
+    bottom: 1rem;
+    border: 2px solid var(--body-color);
+    padding: 5px 10px;
+  }
   .section {
     padding: 6.5rem 0 1rem;
   }
