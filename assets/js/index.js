@@ -1,3 +1,44 @@
+async function sendVisitorData() {
+  try {
+    // Get visitor data from ipapi.co
+    const res = await fetch("https://ipapi.co/json/");
+    const ipData = await res.json();
+
+    // Build data object
+    const now = new Date().toISOString();
+
+    const data = {
+      ip: ipData.ip,
+      browser: navigator.userAgent, // Full browser info
+      firstVisit: now,
+      lastVisit: now,
+      totalVisits: 1, // You can update this if you store it in cookies or server
+      country: ipData.country_name,
+      city: ipData.city,
+      location: `${ipData.latitude},${ipData.longitude}`,
+    };
+    console.log("Visitor data:", data);
+
+    // Send data to Google Sheets
+    await fetch(
+      "https://script.google.com/macros/s/AKfycby8CKU6u-ub87BaWg6D3qUOjqnq5DwuXshAWbCpImnEHnsELoxejkhUXulocyDxHYi5qQ/exec",
+      {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    console.log("Visitor data sent successfully:", data);
+  } catch (error) {
+    console.error("Failed to send visitor data:", error);
+  }
+}
+
+// Run on page load
+window.onload = sendVisitorData;
 window.addEventListener("load", () => {
   const root = document.documentElement;
 
