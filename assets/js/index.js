@@ -1,44 +1,4 @@
-async function sendVisitorData() {
-  try {
-    // Get visitor data from ipapi.co
-    const res = await fetch("https://ipapi.co/json/");
-    const ipData = await res.json();
-
-    // Build data object
-    const now = new Date().toISOString();
-
-    const data = {
-      ip: ipData.ip,
-      browser: navigator.userAgent, // Full browser info
-      firstVisit: now,
-      lastVisit: now,
-      totalVisits: 1, // You can update this if you store it in cookies or server
-      country: ipData.country_name,
-      city: ipData.city,
-      location: `${ipData.latitude},${ipData.longitude}`,
-    };
-    console.log("Visitor data:", data);
-
-    // Send data to Google Sheets
-    await fetch(
-      "https://script.google.com/macros/s/AKfycby8CKU6u-ub87BaWg6D3qUOjqnq5DwuXshAWbCpImnEHnsELoxejkhUXulocyDxHYi5qQ/exec",
-      {
-        method: "POST",
-        body: JSON.stringify(data),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-
-    console.log("Visitor data sent successfully:", data);
-  } catch (error) {
-    console.error("Failed to send visitor data:", error);
-  }
-}
-
-// Run on page load
-window.onload = sendVisitorData;
+trackVisitor(); // Call the function to track visitor
 window.addEventListener("load", () => {
   const root = document.documentElement;
 
@@ -60,6 +20,97 @@ window.addEventListener("load", () => {
     .getElementById("updatecolors")
     .addEventListener("click", () => location.reload());
 });
+function animateCountUp(element, target, duration = 1000) {
+  const start = 0;
+  const range = target - start;
+  const increment = target > start ? 1 : -1;
+  const stepTime = Math.abs(Math.floor(duration / range));
+
+  let current = start;
+  const timer = setInterval(() => {
+    current += increment;
+    element.textContent = current;
+    if (current === target) {
+      clearInterval(timer);
+    }
+  }, stepTime);
+}
+
+function trackVisitor() {
+  const URL_FOR_APPSCRIPT =
+    "https://script.google.com/macros/s/AKfycbzO5qfsBabbxA4DTAbJ7DREAGKBLXWNv1_iPwRfELW0RveGv3fzhOOXR_9wWfpwaDTe_Q/exec";
+  const IPAPI_URL = "https://ipapi.co/json/";
+
+  fetch(URL_FOR_APPSCRIPT)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      return response.json();
+    })
+    .then((data) => {
+      // Update visitor count in the UI
+      const visitorCountElement = document.getElementById("visitors_count");
+
+      if (visitorCountElement) {
+        const count = parseInt(data.value) || 0;
+        animateCountUp(visitorCountElement, count, 1200); // animate to count in 1.2 seconds
+      } else {
+        console.warn("Element with ID 'visitors_count' not found.");
+      }
+    })
+    .catch((error) => {
+      console.error("Error fetching visitor count:", error);
+      // Fallback to 0 if the element is not found or an error occurs
+      const visitorCountElement = document.getElementById("visitors_count");
+      if (visitorCountElement) {
+        visitorCountElement.textContent = "03";
+      }
+    });
+
+  // Check if visitor already counted
+  if (localStorage.getItem("visitorCounted") === "true") {
+    console.log("Visitor already counted, skipping API calls.");
+    return;
+  }
+
+  // Fetch IP info and send to Google Apps Script
+  fetch(IPAPI_URL)
+    .then((response) => response.json())
+    .then((data) => {
+      const now = new Date().toISOString();
+
+      const formData = new URLSearchParams();
+      formData.append("ip", data.ip);
+      formData.append(
+        "browserName",
+        navigator.appCodeName + " " + navigator.appVersion
+      );
+      formData.append("osName", navigator.platform);
+      formData.append(
+        "deviceType",
+        navigator.userAgent.includes("Mobile") ? "Mobile" : "Desktop"
+      );
+
+      formData.append("country", data.country_name);
+      formData.append("city", data.city);
+      formData.append("location", `${data.latitude},${data.longitude}`);
+
+      return fetch(URL_FOR_APPSCRIPT, {
+        method: "POST",
+        body: formData,
+      });
+    })
+    .then((res) => res.json())
+    .then((result) => {
+      console.log("Submitted:", result);
+      // Mark visitor as counted in localStorage
+      localStorage.setItem("visitorCounted", "true");
+    })
+    .catch((err) => {
+      console.error("Error submitting or fetching data:", err);
+    });
+}
 
 const themeToggle = document.querySelector("#theme-button");
 const body = document.body;

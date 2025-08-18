@@ -432,16 +432,33 @@ img {
 }
 /*=============== RED DOT INDICATOR ===============*/
 /* Red dot indicator */
-.red-dot {
-  position: absolute;
-  top: 0px;
-  right: 0px;
-  height: 12px;
-  width: 12px;
-  background-color: red;
-  border-radius: 50%;
-  animation: pulse 1.5s infinite;
-  box-shadow: 0 0 0 rgba(255, 0, 0, 0.5);
+.visitor-badge {
+  position: fixed;
+  bottom: 1rem;
+  left: 0.5rem;
+
+  z-index: 91319;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 10px;
+  background: var(--first-color);
+  color: var(--body-color);
+  border-radius: 20px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px hsla(var(--first-hue), var(--sat), var(--lig), 0.3);
+  border: 2px solid var(--body-color);
+
+  animation: float 3s cubic-bezier(0.4, 0.4, 0.9, 1) infinite;
+}
+
+.visitor-badge:hover {
+  background: var(--first-color);
+  transform: translateY(-1px) scale(1.02);
+  box-shadow: 0 6px 20px hsla(var(--first-hue), var(--sat), var(--lig), 0.4);
 }
 
 /* Animation */
