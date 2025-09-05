@@ -55,8 +55,10 @@
           { "name": "HTML", "level": "Advanced" },
           { "name": "CSS", "level": "Advanced" },
           { "name": "Javascript", "level": "Advanced" },
-          { "name": "Bootstrap", "level": "Intermediate" },
+          { "name": "Bootstrap  ", "level": "basics" },
+          { "name": "Tailwind  ", "level": "Intermediate" },
           { "name": "Git", "level": "Advanced" },
+          { "name": "GitHub", "level": "Advanced" },
           { "name": "React", "level": "basics" }
         ]
       },
@@ -65,10 +67,12 @@
         "skills": [
           { "name": "Node JS", "level": "Intermediate" },
           { "name": "ML/DL", "level": "basics" },
-          { "name": "Flask", "level": "Intermediate" },
+          { "name": "Mongo DB", "level": "basics" },
 
           { "name": "Python", "level": "Intermediate" },
+          { "name": "Flask", "level": "Basics" },
           { "name": "MySQL", "level": "Intermediate" },
+          { "name": "Rest Api ", "level": "Intermediate" },
 
           { "name": "Firebase", "level": "Intermediate" }
         ]
@@ -100,7 +104,13 @@
         "knowMore": "https://github.com/Mohammadibbu/MindReader",
         "link": "https://mohammadibbu.github.io/MindReader/"
       },
-
+      {
+        "title": "islamic Quiz App",
+        "description": "Islamic Quiz App is a web-based platform to manage and conduct timed Islamic quizzes. Built with React, Node.js, and Firebase, it supports question scheduling, candidate tracking, and auto-result evaluation.",
+        "image": "assets/img/islamicquiz.png",
+        "knowMore": "https://github.com/Mohammadibbu/islamicquizbackup",
+        "link": "https://islamic-quiz-tntj.netlify.app/"
+      },
       {
         "title": "IBBU Chatbot - Built with Chatling AI",
         "description": "A personal AI chatbot that assists with resume-related queries, built using Chatling AI. It provides instant responses to questions about my resume, skills, and experiences.",

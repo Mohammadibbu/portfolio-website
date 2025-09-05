@@ -42,35 +42,50 @@ function animateCountUp(element, target, duration = 1000) {
 
 function trackVisitor() {
   const URL_FOR_APPSCRIPT =
-    "https://script.google.com/macros/s/AKfycbzO5qfsBabbxA4DTAbJ7DREAGKBLXWNv1_iPwRfELW0RveGv3fzhOOXR_9wWfpwaDTe_Q/exec";
+    "https://script.google.com/macros/s/AKfycbzsjJTpeFyMnfT-kmMQvQuqFe1nk3eExwpAV3ZRWcFtwgM-z0Vw4XZ6qqogxz3TvJH5kg/exec";
   const IPAPI_URL = "https://ipapi.co/json/";
+  // Fetch current visitor count from Google Apps Script
 
-  fetch(URL_FOR_APPSCRIPT)
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-      return response.json();
-    })
-    .then((data) => {
-      // Update visitor count in the UI
-      const visitorCountElement = document.getElementById("visitors_count");
+  const FIVE_MINUTES = 5 * 60 * 1000; // in milliseconds
 
-      if (visitorCountElement) {
-        const count = parseInt(data.value) || 0;
-        animateCountUp(visitorCountElement, count, 1200); // animate to count in 1.2 seconds
-      } else {
-        console.warn("Element with ID 'visitors_count' not found.");
-      }
-    })
-    .catch((error) => {
-      console.error("Error fetching visitor count:", error);
-      // Fallback to 0 if the element is not found or an error occurs
-      const visitorCountElement = document.getElementById("visitors_count");
-      if (visitorCountElement) {
-        visitorCountElement.textContent = "03";
-      }
-    });
+  // Check last time visitor count was fetched
+  const lastFetchTime = localStorage.getItem("lastCountFetchTime");
+  const now = Date.now();
+  const visitorCountElement = document.getElementById("visitors_count");
+  const cachedCount = parseInt(
+    localStorage.getItem("cachedVisitorCount") || "03"
+  );
+  if (!lastFetchTime || now - lastFetchTime > FIVE_MINUTES) {
+    fetch(URL_FOR_APPSCRIPT)
+      .then((response) => {
+        if (!response.ok) throw new Error("Network response was not ok");
+        return response.json();
+      })
+      .then((data) => {
+        if (visitorCountElement) {
+          const count = parseInt(data.value) || cachedCount;
+          localStorage.setItem("cachedVisitorCount", count);
+          animateCountUp(visitorCountElement, count, 1200);
+        } else {
+          console.warn("Element with ID 'visitors_count' not found.");
+        }
+
+        localStorage.setItem("lastCountFetchTime", now);
+      })
+      .catch((error) => {
+        console.error("Error fetching visitor count:", error);
+
+        if (visitorCountElement) {
+          animateCountUp(visitorCountElement, cachedCount, 800);
+        }
+      });
+  } else {
+    console.log("Visitor count fetched recently; so, skipping fetch.");
+
+    if (visitorCountElement) {
+      animateCountUp(visitorCountElement, cachedCount, 800);
+    }
+  }
 
   // Check if visitor already counted
   if (localStorage.getItem("visitorCounted") === "true") {
@@ -82,7 +97,13 @@ function trackVisitor() {
   fetch(IPAPI_URL)
     .then((response) => response.json())
     .then((data) => {
-      const now = new Date().toISOString();
+      console.log("IP Data:", data);
+
+      const isoString = new Date().toISOString();
+      const date = new Date(isoString);
+      const Timestamp = date.toLocaleString().replace(",", "");
+
+      console.log(isoString, date, Timestamp);
 
       const formData = new URLSearchParams();
       formData.append("ip", data.ip);
@@ -99,6 +120,7 @@ function trackVisitor() {
       formData.append("country", data.country_name);
       formData.append("city", data.city);
       formData.append("location", `${data.latitude},${data.longitude}`);
+      formData.append("TimeStamp", `${Timestamp}`);
 
       return fetch(URL_FOR_APPSCRIPT, {
         method: "POST",
@@ -205,7 +227,7 @@ async function fetchData() {
       throw new Error("Network response was not ok");
     }
     const jsonData = await response.json();
-    console.log(jsonData);
+    // console.log(jsonData);
 
     loadHome(jsonData.home);
     loadAbout(jsonData.about);
@@ -231,7 +253,6 @@ function loadHome(homeData) {
     `
     )
     .join("");
-  console.log(socialLinksHTML);
 
   home.innerHTML = `
     <div class="home__container container grid">
