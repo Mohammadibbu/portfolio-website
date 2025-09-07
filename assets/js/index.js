@@ -190,8 +190,8 @@ function ShootingStar(startStop) {
       // Remove after animation
       setTimeout(() => {
         star.remove();
-      }, 1000);
-    }, 2000); // create a shooting star every 2 seconds
+      }, 2000);
+    }, 1500); // create a shooting star every 2 seconds
   }
 
   if (startStop === "stop") {
