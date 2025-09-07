@@ -177,6 +177,97 @@ img {
   max-width: 100%;
   height: auto;
 }
+/* =============STARS ANIMATION=========== */
+.stars {
+  z-index: -2;
+  position: absolute;
+  background: transparent;
+
+  animation: animStar linear infinite;
+}
+
+.stars:after {
+  content: "";
+  position: absolute;
+  top: 2000px;
+  background: transparent;
+}
+
+.small {
+  width: 1px;
+  height: 1px;
+  border-radius: 100%;
+  animation-duration: 50s;
+}
+
+.small:after {
+  width: 1px;
+  height: 1px;
+  border-radius: 100%;
+}
+
+.medium {
+  width: 2px;
+  height: 2px;
+  border-radius: 100%;
+  animation-duration: 100s;
+}
+
+.medium:after {
+  width: 2px;
+  height: 2px;
+  border-radius: 100%;
+}
+
+.big {
+  border-radius: 100%;
+  width: 3px;
+  height: 3px;
+  animation-duration: 150s;
+}
+
+.big:after {
+  width: 3px;
+  height: 3px;
+  border-radius: 100%;
+}
+
+@keyframes animStar {
+  from {
+    transform: translateY(0px);
+  }
+  to {
+    transform: translateY(-2000px);
+  }
+}
+
+.shooting-star {
+  position: absolute;
+  width: 2px;
+  height: 100px;
+  background: linear-gradient(
+    -45deg,
+    var(--first-color),
+    rgba(255, 255, 255, 0)
+  );
+  opacity: 0;
+  z-index: 1;
+  transform: rotate(45deg);
+  pointer-events: none;
+  animation: shootingStarAnim 1s ease-out forwards;
+}
+
+@keyframes shootingStarAnim {
+  0% {
+    opacity: 1;
+    transform: translate(0, 0) rotate(45deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-300px, 300px) rotate(45deg);
+  }
+}
+
 /*=============== ANIMATIONS ===============*/
 @keyframes fadeInUp {
   from {
@@ -486,6 +577,7 @@ img {
   /* height: var(--header-height); */
 
   background-color: var(--body-color);
+
   z-index: var(--z-fixed);
   transition: all 0.4s ease;
 }

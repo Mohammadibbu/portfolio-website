@@ -141,19 +141,108 @@ function trackVisitor() {
 const themeToggle = document.querySelector("#theme-button");
 const body = document.body;
 
+//===================== STARS ANIMATION ====================//
+
+function generateStarLayer(selector, count) {
+  const starContainer = document.querySelector(selector);
+  let shadowStr = "";
+
+  for (let i = 0; i < count; i++) {
+    const x = Math.floor(Math.random() * 2000);
+    const y = Math.floor(Math.random() * 2000);
+    shadowStr += `${x}px ${y}px var(--first-color)${
+      i !== count - 1 ? "," : ""
+    }`;
+  }
+
+  starContainer.style.boxShadow = shadowStr;
+  starContainer.after.style = starContainer.style;
+
+  // Apply to :after pseudo-element manually
+  const style = document.createElement("style");
+  style.innerHTML = `
+        ${selector}::after {
+          box-shadow: ${shadowStr};
+        }
+      `;
+  document.head.appendChild(style);
+}
+// Shooting Star Generator
+let shootingStarInterval = null; // Store interval ID globally or in closure
+
+function ShootingStar(startStop) {
+  if (startStop === "start") {
+    // Prevent multiple intervals
+    if (shootingStarInterval !== null) return;
+
+    shootingStarInterval = setInterval(() => {
+      const star = document.createElement("div");
+      star.classList.add("shooting-star");
+
+      // Random starting position
+      const startX = Math.random() * window.innerWidth;
+      const startY = Math.random() * (window.innerHeight / 2); // only top half
+      star.style.left = `${startX}px`;
+      star.style.top = `${startY}px`;
+
+      document.body.appendChild(star);
+
+      // Remove after animation
+      setTimeout(() => {
+        star.remove();
+      }, 1000);
+    }, 2000); // create a shooting star every 2 seconds
+  }
+
+  if (startStop === "stop") {
+    clearInterval(shootingStarInterval);
+    shootingStarInterval = null;
+  }
+}
+
 // Apply saved theme on page load
 const savedTheme = localStorage.getItem("theme");
 if (savedTheme === "dark") {
   body.classList.add("dark-theme");
   themeToggle.classList.add("bx-moon");
+  generateStarLayer("#stars", 150);
+  generateStarLayer("#stars2", 100);
+  generateStarLayer("#stars3", 50);
+
+  // Create shooting stars at intervals
+  ShootingStar("start");
 } else {
   themeToggle.classList.add("bx-sun");
+  // Clear stars by regenerating with 0 count
+  generateStarLayer("#stars", 0);
+  generateStarLayer("#stars2", 0);
+  generateStarLayer("#stars3", 0);
+
+  // Clear the shooting star interval
+  ShootingStar("stop");
 }
 
 // Toggle theme on click
 themeToggle.addEventListener("click", () => {
   body.classList.toggle("dark-theme");
   const isDark = body.classList.contains("dark-theme");
+
+  if (isDark) {
+    generateStarLayer("#stars", 150);
+    generateStarLayer("#stars2", 100);
+    generateStarLayer("#stars3", 50);
+
+    // Create shooting stars at intervals
+    ShootingStar("start");
+  } else {
+    // Clear stars by regenerating with 0 count
+    generateStarLayer("#stars", 0);
+    generateStarLayer("#stars2", 0);
+    generateStarLayer("#stars3", 0);
+
+    // Clear the shooting star interval
+    ShootingStar("stop");
+  }
 
   themeToggle.classList.toggle("bx-moon", isDark);
   themeToggle.classList.toggle("bx-sun", !isDark);
