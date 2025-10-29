@@ -891,12 +891,19 @@ if (!document.getElementById("fadeOut-style")) {
 }
 
 //loader
-
 window.addEventListener("load", () => {
   setTimeout(() => {
     const loader = document.getElementById("loader");
-    loader.style.opacity = "0";
-    loader.style.transition = "opacity 0.5s ease";
-    setTimeout(() => (loader.style.display = "none"), 500);
-  }, 2000);
+
+    if (loader) {
+      loader.style.transition = "opacity 0.5s ease";
+      loader.style.opacity = "0";
+
+      setTimeout(() => {
+        loader.style.display = "none";
+      }, 500);
+    }
+  }, 1500);
+
+  window.scrollTo(0, 0);
 });
