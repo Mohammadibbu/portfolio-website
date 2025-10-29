@@ -97,13 +97,13 @@ function trackVisitor() {
   fetch(IPAPI_URL)
     .then((response) => response.json())
     .then((data) => {
-      console.log("IP Data:", data);
+      // console.log("IP Data:", data);
 
       const isoString = new Date().toISOString();
       const date = new Date(isoString);
       const Timestamp = date.toLocaleString().replace(",", "");
 
-      console.log(isoString, date, Timestamp);
+      // console.log(isoString, date, Timestamp);
 
       const formData = new URLSearchParams();
       formData.append("ip", data.ip);
@@ -410,68 +410,88 @@ function loadSkills(skillsData) {
 
   const categoriesHTML = skillsData.categories
     .map((category) => {
-      category.skills
-        .map(
-          (skill) => `
-          <div class="skills__data">
-            <i class='bx bxs-badge-check'></i>
-            <div>
-              <h3 class="skills__name">${skill.name}</h3>
-              <span class="skills__level">${skill.level}</span>
-            </div>
-          </div>
-        `
-        )
-        .join("");
-
-      // Split skills into 2 groups
+      // Split skills into 2 columns
       const mid = Math.ceil(category.skills.length / 2);
-      const group1 = category.skills
-        .slice(0, mid)
-        .map(
-          (skill) => `
-        <div class="skills__data">
-          <i class='bx bxs-badge-check'></i>
-          <div>
-            <h3 class="skills__name">${skill.name}</h3>
-            <span class="skills__level">${skill.level}</span>
+      const createSkillHTML = (skill) => `
+      <div class="skills__data">
+         <img src=${skill.icon} alt=${skill.name}>
+        <div>
+          <h3 class="skills__name">${skill.name}</h3>
+          <div class="slider-container">
+            <div class="slider-fill" data-level="${skill.level}"></div>
           </div>
-        </div>`
-        )
-        .join("");
-
-      const group2 = category.skills
-        .slice(mid)
-        .map(
-          (skill) => `
-        <div class="skills__data">
-          <i class='bx bxs-badge-check'></i>
-          <div>
-            <h3 class="skills__name">${skill.name}</h3>
-            <span class="skills__level">${skill.level}</span>
-          </div>
-        </div>`
-        )
-        .join("");
+          <div class="skill-level">${skill.level} / 5</div>
+        </div>
+      </div>
+    `;
 
       return `
-        <div class="skills__content">
-          <h3 class="skills__title">${category.categoryTitle}</h3>
-          <div class="skills__box">
-            <div class="skills__group">${group1}</div>
-            <div class="skills__group">${group2}</div>
+      <div class="skills__content">
+        <h3 class="skills__title">${category.categoryTitle}</h3>
+        <div class="skills__box">
+          <div class="skills__group">
+            ${category.skills.slice(0, mid).map(createSkillHTML).join("")}
           </div>
-        </div>`;
+          <div class="skills__group">
+            ${category.skills.slice(mid).map(createSkillHTML).join("")}
+          </div>
+        </div>
+      </div>
+    `;
     })
     .join("");
+  const logosMarquee = skillsData.categories
+    .map(
+      (category) =>
+        category.skills
+          .map(
+            (skill) =>
+              `<img src="${skill.icon}" alt="${skill.name}" title="${skill.name}">`
+          )
+          .join("") // join inner skill icons
+    )
+    .join(""); // join all categories together
 
   skillsSection.innerHTML = `
     <span class="section__subtitle">${skillsData.subtitle}</span>
     <h2 class="section__title">${skillsData.title}</h2>
+    <div class="logo-marquee">
+    <div class="logo-marquee--gradient"></div>
+  <div class="logo-marquee--marquee">
+    <div class="logo-marquee--marquee-group">
+      ${logosMarquee}
+    </div>
+<div class="logo-marquee--marquee-group">
+      ${logosMarquee}
+    </div>
+  </div>
+</div>
     <div class="skills__container container grid">
       ${categoriesHTML}
     </div>
+  
+   <div class="logo-marquee">
+    <div class="logo-marquee--gradient"></div>
+  <div class="logo-marquee--marquee">
+    <div class="logo-marquee--marquee-group">
+      ${logosMarquee}
+    </div>
+<div class="logo-marquee--marquee-group">
+      ${logosMarquee}
+    </div>
+  </div>
+</div>
+
   `;
+
+  // Animate sliders
+  document.querySelectorAll(".slider-fill").forEach((slider) => {
+    const level = Number(slider.dataset.level);
+    slider.style.width = "0%";
+    setTimeout(() => {
+      slider.style.width = `${(level / 5) * 100}%`;
+    }, 200);
+  });
 }
 
 function loadEducation(EducationData) {
@@ -869,3 +889,14 @@ if (!document.getElementById("fadeOut-style")) {
   `;
   document.head.appendChild(style);
 }
+
+//loader
+
+window.addEventListener("load", () => {
+  setTimeout(() => {
+    const loader = document.getElementById("loader");
+    loader.style.opacity = "0";
+    loader.style.transition = "opacity 0.5s ease";
+    setTimeout(() => (loader.style.display = "none"), 500);
+  }, 2000);
+});
