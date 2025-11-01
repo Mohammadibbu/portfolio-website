@@ -104,7 +104,7 @@
           },
           {
             "name": "ML/DL",
-            "level": 3,
+            "level": 2,
             "icon": "https://img.icons8.com/cotton/48/brain-3.png"
           },
           {
@@ -129,7 +129,7 @@
           },
           {
             "name": "Rest Api",
-            "level": 3,
+            "level": 4,
             "icon": "https://img.icons8.com/color/48/000000/api.png"
           },
           {
