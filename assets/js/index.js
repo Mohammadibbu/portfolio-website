@@ -43,7 +43,7 @@ window.addEventListener("load", () => {
     root.style.setProperty("--sat", saturation);
     root.style.setProperty("--lig", lightness);
   };
-
+  updateColors();
   updateBtn.addEventListener("click", updateColors);
 });
 function animateCountUp(element, target, duration = 1000) {
