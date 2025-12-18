@@ -29,10 +29,6 @@ window.addEventListener("load", () => {
     updateBtn.classList.add("animating");
     setTimeout(() => updateBtn.classList.remove("animating"), 600);
 
-    if (colorHint) {
-      colorHint.classList.add("hint-hidden");
-    }
-
     const mainHue = Math.floor(Math.random() * 360);
     const complementHue = (mainHue + 180) % 360;
     const saturation = `${Math.floor(Math.random() * 21) + 80}%`;
@@ -44,7 +40,12 @@ window.addEventListener("load", () => {
     root.style.setProperty("--lig", lightness);
   };
   updateColors();
-  updateBtn.addEventListener("click", updateColors);
+  updateBtn.addEventListener("click", () => {
+    updateColors();
+    if (colorHint) {
+      colorHint.classList.add("hint-hidden");
+    }
+  });
 });
 function animateCountUp(element, target, duration = 1000) {
   if (!element || isNaN(target)) return;
