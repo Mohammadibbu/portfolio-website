@@ -161,7 +161,8 @@
           "React",
           "Tailwind CSS",
           "Node.js",
-          "Express",
+          "TypeScript",
+          "Express.js",
           "Firebase"
         ],
         "description": "Developed a modern, fully responsive import-export web application for a real-world client to showcase agricultural products professionally and enhance global buyer engagement. Implemented product listings, image gallery, FAQ section, and a secure admin panel for content management. Integrated direct WhatsApp and phone communication for seamless inquiries, optimized performance, and ensured cross-device compatibility.",
@@ -177,6 +178,9 @@
           "Flask",
           "Scikit-Learn",
           "Firebase",
+          "HTML5",
+          "CSS3",
+          "JavaScript",
           "Machine Learning"
         ],
         "description": "Designed and implemented a content-based anime recommendation system that analyzes user preferences and viewing history. Utilized cosine similarity and machine learning techniques to generate accurate recommendations. Built a Flask-based backend with Firebase integration for user data storage, delivering personalized suggestions through a simple and intuitive web interface.",
@@ -202,7 +206,7 @@
       {
         "title": "Mind Reader",
         "category": "Interactive",
-        "techStack": ["JavaScript", "HTML", "CSS", "Logic Algorithms"],
+        "techStack": ["JavaScript", "HTML", "CSS"],
         "description": "Developed an interactive and engaging web application that predicts a number chosen by the user using binary logic. The application guides users through a sequence of logical yes/no questions and determines the number accurately. Focused on clean UI design, smooth transitions, and logical efficiency to provide a fun user experience.",
         "image": "assets/img/guessmaster.jpg",
         "knowMore": "https://github.com/Mohammadibbu/MindReader",
@@ -211,7 +215,7 @@
       {
         "title": "Islamic Quiz App",
         "category": "Fullstack",
-        "techStack": ["React", "Node.js", "Firebase", "Tailwind CSS"],
+        "techStack": ["React", "Node.js", "Firebase", "CSS5"],
         "description": "Built a full-stack quiz management platform designed to conduct timed Islamic quizzes efficiently. Features include question scheduling, candidate registration, real-time timer control, and automated result evaluation. Implemented Firebase for authentication and data storage, ensuring scalability, reliability, and a smooth user experience.",
         "image": "assets/img/islamicquiz.png",
         "knowMore": "https://github.com/Mohammadibbu/islamicquizbackup",
@@ -220,7 +224,7 @@
       {
         "title": "IBBU Chatbot - Chatling AI",
         "category": "AI / Automation",
-        "techStack": ["Chatling AI", "NLP", "LLM Integration"],
+        "techStack": ["Chatling AI", "NLP", "LLM Integration", "KnowledgeBase"],
         "description": "Developed a personal AI-powered chatbot trained on my resume and professional background to assist website visitors. The chatbot answers queries related to skills, education, projects, and experience using natural language processing and large language model integration. Designed to improve visitor engagement and provide instant, intelligent responses.",
         "image": "assets/img/Chatbot.png",
         "knowMore": "https://share.chatling.ai/s/59k265GmL56vvrm",
@@ -230,7 +234,14 @@
       {
         "title": "PG Result Management (UNOM)",
         "category": "Backend",
-        "techStack": ["Node.js", "MySQL", "Handlebars", "Bootstrap"],
+        "techStack": [
+          "Node.js",
+          "MySQL",
+          "Handlebars",
+          "Bootstrap",
+          "HTML5",
+          "Express.js"
+        ],
         "description": "Created a backend-driven result management system to automate postgraduate result processing for the University of Madras. Implemented secure authentication, result generation, and structured data handling using MySQL. The system simplifies administrative tasks, reduces manual errors, and ensures secure access to academic records.",
         "image": "assets/img/Pgresult.png",
         "knowMore": "https://github.com/Mohammadibbu/Result-management",
@@ -248,7 +259,7 @@
       {
         "title": "Blood Donor Finder",
         "category": "Social Cause",
-        "techStack": ["JavaScript", "Firebase", "HTML", "CSS"],
+        "techStack": ["JavaScript", "Google Sheets", "HTML", "CSS"],
         "description": "Built a social-impact web platform that connects blood donors with individuals in urgent need. Users can search donors based on blood group and location, while Firebase handles real-time data storage and updates. The application promotes community support and fast access to life-saving resources.",
         "image": "assets/img/Blooddonor.jpg",
         "knowMore": "https://github.com/Mohammadibbu/BloodDonation",
@@ -257,7 +268,7 @@
       {
         "title": "Password Strength Checker",
         "category": "Security",
-        "techStack": ["JavaScript", "RegEx", "HTML", "CSS"],
+        "techStack": ["Node.js", "React", "Bootstrap", "lucide-react icons"],
         "description": "Developed a real-time password strength evaluation tool that analyzes password length, character variety, and complexity using regular expressions. Provides instant visual feedback to users, helping them create stronger and more secure passwords while following modern security best practices.",
         "image": "assets/img/PasswordStrengthChecker.png",
         "knowMore": "https://github.com/Mohammadibbu/password-strength-checker",
@@ -266,7 +277,7 @@
       {
         "title": "Random Password Generator",
         "category": "Security",
-        "techStack": ["JavaScript", "Crypto API", "HTML", "CSS"],
+        "techStack": ["JavaScript", "HTML", "Bootstrap", "Bootstrap CDN"],
         "description": "Created a secure random password generator using the browser Crypto API to ensure cryptographically strong passwords. Allows users to customize password length and character sets, generating reliable passwords that improve account security and protect against brute-force attacks.",
         "image": "assets/img/RandomPasswordGenerator.jpg",
         "knowMore": "https://github.com/Mohammadibbu/random-password-generator",
