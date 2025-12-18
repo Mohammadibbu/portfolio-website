@@ -7,18 +7,11 @@
   --header-height: 3.5rem;
 
   /*========== Colors ==========*/
-  /*Color mode HSL(hue, saturation, lightness)*/
-  /*   
-        Purple: hsl(250, 66%, 75%)
-        Blue: hsl(207, 90%, 72%)
-        Pink: hsl(356, 66%, 75%)
-        Teal: hsl(174, 63%, 62%)
-  */
 
-  --first-hue: 345; /* Deep, luxurious red-pink for a dramatic feel */
-  --sat: 97%; /* High saturation for intensity */
-  --lig: 45%; /* Balanced lightness to keep it vibrant */
-  --second-hue: 220; /* Rich, royal blue to provide a strong contrast */
+  --first-hue: 345;
+  --sat: 97%;
+  --lig: 45%;
+  --second-hue: 220;
 
   --first-color: hsl(var(--first-hue), var(--sat), var(--lig));
   --first-color-alt: hsl(var(--first-hue), var(--sat), 71%); /* -4% */
@@ -29,8 +22,7 @@
   --container-color: hsl(var(--second-hue), 32%, 12%);
 
   /*========== Font and typography ==========*/
-  /*.5rem = 8px | 1rem = 16px ...*/
-  /* --body-font: "Poppins", sans-serif; */
+
   --body-font: "Tagesschrift", system-ui;
   --biggest-font-size: 1.75rem;
   --h1-font-size: 1.5rem;
@@ -102,7 +94,7 @@ html {
   pointer-events: none;
   border-radius: 50%;
   transform: translate(-50%, -50%);
-  z-index: 1000;
+  z-index: 9999999;
   transition: transform 0.3s ease, background 0.3s ease, border-color 0.3s ease;
 }
 
@@ -170,7 +162,6 @@ button {
   border: none;
   outline: none;
   transition: all 0.3s ease;
-  animation: float 3s cubic-bezier(0.4, 0, 0.2, 1) infinite;
 }
 
 img {
@@ -985,6 +976,7 @@ img {
 
 /*=============== ABOUT ===============*/
 .about__container {
+  margin-top: 50px;
   row-gap: 2.5rem;
   animation: fadeInUp 0.8s ease-out;
 }
@@ -1440,21 +1432,24 @@ img {
 }
 
 .work__button {
-  width: max-content;
-  color: var(--first-color);
+  margin-top: 15px;
+  width: 100%;
+  color: var(--body-color);
   font-size: var(--small-font-size);
   display: flex;
+  justify-content: center;
   align-items: center;
   column-gap: 0.25rem;
   cursor: pointer;
   transition: all 0.3s ease;
-  padding: 0.5rem;
+  padding: 0.6rem;
   border-radius: 0.5rem;
+  background-color: var(--first-color);
 }
 
 .work__button:hover {
-  background-color: hsla(var(--first-hue), var(--sat), var(--lig), 0.1);
-  color: var(--first-color-alt);
+  background-color: var(--first-color-alt);
+  color: var(--body-color);
 }
 
 .work__button:hover .work__icon {
@@ -2554,4 +2549,317 @@ img {
     transform: translateY(66%) scale(0.65);
     opacity: 0.8;
   }
+}
+
+/* --- PROJECT MODAL OVERLAY --- */
+.project__modal {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(8px);
+  z-index: 10000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.project__modal.active-modal {
+  display: flex;
+  opacity: 1;
+}
+
+/* --- MODAL CARD --- */
+.modal__card {
+  position: relative;
+  background-color: var(--container-color);
+  width: 100%;
+  max-width: 850px;
+  max-height: 90vh;
+  border-radius: 28px;
+  border: 1px solid var(--text-color-light);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transform: translateY(30px);
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.project__modal.active-modal .modal__card {
+  transform: translateY(0);
+}
+
+/* --- SCROLLABLE BODY --- */
+.modal__body {
+  padding: 3rem 3rem 1rem 3rem;
+  overflow-y: auto;
+  flex: 1;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Custom Scrollbar */
+.modal__body::-webkit-scrollbar {
+  width: 5px;
+}
+.modal__body::-webkit-scrollbar-thumb {
+  background: var(--first-color-alt);
+  border-radius: 10px;
+}
+
+/* --- IMAGE SYSTEM --- */
+.modal__image-container {
+  width: 100%;
+  height: 280px;
+  border-radius: 18px;
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+  border: 1px solid var(--text-color-light);
+  flex-shrink: 0;
+}
+
+.modal__image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* --- TEXT STYLING --- */
+.modal__title {
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: var(--title-color);
+  margin-bottom: 0.75rem;
+}
+
+.modal__text {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--text-color);
+  margin-bottom: 2rem;
+}
+
+/* --- TECH BADGES --- */
+.modal__tech {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-bottom: 1.5rem;
+}
+
+.tech-badge {
+  /* Using hsla for the subtle background */
+  background-color: var(--body-color);
+  color: var(--first-color); /* Uses your brand color for the text */
+  padding: 0.4rem 1rem;
+  border-radius: 50px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border: 1px solid var(--first-color-alt);
+}
+
+/* --- FIXED ACTIONS --- */
+.modal__actions {
+  padding: 1.5rem 3rem 2.5rem;
+  display: flex;
+  gap: 1rem;
+  background-color: var(--container-color);
+  border-top: 1px solid hsla(var(--second-hue), 4%, 55%, 0.1);
+}
+
+/* --- BUTTONS --- */
+.btn-primary,
+.btn-secondary {
+  padding: 0.8rem 1.8rem;
+  border-radius: 50px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  transition: 0.3s;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.btn-primary {
+  background-color: var(
+    --first-color
+  ); /* Updated to your primary brand color */
+  color: var(--body-color);
+  border: 1px solid var(--first-color);
+}
+
+.btn-secondary {
+  background-color: transparent;
+  background-color: var(--body-color);
+  color: var(--first-color);
+  border: 2px solid var(--first-color);
+}
+
+.btn-primary:hover,
+.btn-secondary:hover {
+  opacity: 0.7;
+}
+
+/* --- FIXED CLOSE BUTTON --- */
+.modal__close {
+  position: absolute;
+  top: 1.25rem;
+  right: 1.5rem;
+  font-size: 2rem;
+  color: var(--first-color);
+  cursor: pointer;
+
+  background-color: var(--body-color);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  transition: 0.3s;
+}
+
+.modal__close:hover {
+  background-color: hsla(var(--first-hue), 88%, 8%, 0.4);
+}
+
+/* --- MOBILE RESPONSIVE --- */
+@media screen and (max-width: 768px) {
+  .modal__body {
+    padding: 3rem 1.5rem 1rem 1.5rem;
+  }
+  .modal__actions {
+    padding: 1rem 1.5rem 1.5rem;
+    flex-direction: column;
+  }
+  .btn-primary,
+  .btn-secondary {
+    width: 100%;
+  }
+  .modal__image-container {
+    height: 200px;
+  }
+}
+
+/* Container Alignment */
+.color-switcher-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+/* Floating Hint Bubble */
+.color-hint {
+  position: absolute;
+  top: 140%;
+  right: 45px;
+  background-color: var(--first-color);
+  color: var(--body-color);
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  white-space: nowrap;
+  box-shadow: 0 10px 20px hsla(var(--first-hue), var(--sat), 10%, 0.3);
+  pointer-events: none;
+  animation: floating 2.5s infinite ease-in-out;
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  z-index: 100;
+}
+
+/* Triangle for Hint Bubble */
+.color-hint::before {
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  right: 15px;
+  border-width: 6px;
+  border-style: solid;
+  border-color: transparent transparent var(--first-color) transparent;
+}
+
+/* Palette Button Styling */
+.color-btn {
+  background: var(--container-color);
+  border: 1px solid var(--text-color-light);
+  color: var(--title-color);
+  width: 30px;
+  height: 30px;
+  border-radius: 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  transition: 0.3s;
+}
+
+.color-btn:hover {
+  color: var(--first-color);
+  border-color: var(--first-color);
+  transform: translateY(-2px);
+}
+
+.color-btn.animating {
+  animation: palette-spin 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Theme Button Styling */
+.theme-button {
+  background: var(--container-color);
+  border: 1px solid var(--text-color-light);
+
+  width: 30px;
+  height: 30px;
+  border-radius: 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  transition: 0.3s;
+
+  color: var(--title-color);
+
+  transition: 0.3s;
+}
+
+.theme-button:hover {
+  color: var(--first-color);
+}
+
+/* Animations */
+@keyframes floating {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes palette-spin {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+  50% {
+    transform: rotate(180deg) scale(1.2);
+  }
+  100% {
+    transform: rotate(360deg) scale(1);
+  }
+}
+
+/* Class to hide hint bubble */
+.hint-hidden {
+  opacity: 0;
+  transform: translateY(10px);
+  pointer-events: none;
 }

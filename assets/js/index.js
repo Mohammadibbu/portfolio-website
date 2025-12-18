@@ -1,354 +1,271 @@
-trackVisitor(); // Call the function to track visitor
+trackVisitor();
+
 window.addEventListener("load", () => {
   const root = document.documentElement;
+  const updateBtn = document.getElementById("updatecolors");
+  const colorHint = document.getElementById("color-hint");
+  const phrases = [
+    "Shift the vibe",
+    "Paint the UI",
+    "Recast colors",
+    "New mood",
+    "Refresh the look",
+    "Change the theme",
+    "Switch the style",
+    "Redefine the feel",
+    "Set the tone",
+    "Reimagine design",
+    "Update the palette",
+    "Transform the UI",
+    "Style the experience",
+    "Visual refresh",
+    "Mood switch",
+    "Design reboot",
+  ];
 
-  function updateColors() {
-    const firstHue = Math.floor(Math.random() * 360);
-    const secondHue = (firstHue + 180) % 360; // Opposing hue for contrast
-    const saturation = Math.floor(80 + Math.random() * 20) + "%"; // 80%–100%
-    const lightness = Math.floor(40 + Math.random() * 20) + "%"; // 40%–60%
+  const randomPhrase = phrases[Math.floor(Math.random() * phrases.length)];
+  document.getElementById("color-hint").innerText = randomPhrase + " ✨";
+  const updateColors = () => {
+    // 1. Play Animation
+    updateBtn.classList.add("animating");
+    setTimeout(() => updateBtn.classList.remove("animating"), 600);
 
-    root.style.setProperty("--first-hue", firstHue);
-    root.style.setProperty("--second-hue", secondHue);
+    // 2. Hide Hint Bubble after first click
+    if (colorHint) {
+      colorHint.classList.add("hint-hidden");
+    }
+
+    // 3. Generate Your Palette Logic
+    const mainHue = Math.floor(Math.random() * 360);
+    const complementHue = (mainHue + 180) % 360;
+    const saturation = `${Math.floor(Math.random() * 21) + 80}%`;
+    const lightness = `${Math.floor(Math.random() * 21) + 40}%`;
+
+    // 4. Set CSS Variables
+    root.style.setProperty("--first-hue", mainHue);
+    root.style.setProperty("--second-hue", complementHue);
     root.style.setProperty("--sat", saturation);
     root.style.setProperty("--lig", lightness);
-  }
+  };
 
-  updateColors(); // initial call
-
-  document
-    .getElementById("updatecolors")
-    .addEventListener("click", () => location.reload());
+  updateBtn.addEventListener("click", updateColors);
 });
 function animateCountUp(element, target, duration = 1000) {
-  if (!element || isNaN(target) || target < 1) {
-    console.error("Invalid element or target value for count up animation.");
-    return;
-  }
-  const start = 0;
-  const range = target - start;
-  const increment = target > start ? 1 : -1;
-  const stepTime = Math.abs(Math.floor(duration / range));
+  if (!element || isNaN(target)) return;
 
-  let current = start;
-  const timer = setInterval(() => {
-    current += increment;
-    element.textContent = current;
-    if (current === target) {
-      clearInterval(timer);
+  const startTime = performance.now();
+
+  function update(currentTime) {
+    const elapsed = currentTime - startTime;
+    const progress = Math.min(elapsed / duration, 1);
+
+    // Calculate current number based on progress percentage
+    const currentCount = Math.floor(progress * target);
+    element.textContent = currentCount.toLocaleString();
+
+    if (progress < 1) {
+      requestAnimationFrame(update);
     }
-  }, stepTime);
+  }
+
+  requestAnimationFrame(update);
 }
 
-function trackVisitor() {
-  const URL_FOR_APPSCRIPT =
+async function trackVisitor() {
+  const APPSCRIPT_URL =
     "https://script.google.com/macros/s/AKfycbzsjJTpeFyMnfT-kmMQvQuqFe1nk3eExwpAV3ZRWcFtwgM-z0Vw4XZ6qqogxz3TvJH5kg/exec";
   const IPAPI_URL = "https://ipapi.co/json/";
-  // Fetch current visitor count from Google Apps Script
 
-  const FIVE_MINUTES = 5 * 60 * 1000; // in milliseconds
-
-  // Check last time visitor count was fetched
-  const lastFetchTime = localStorage.getItem("lastCountFetchTime");
-  const now = Date.now();
   const visitorCountElement = document.getElementById("visitors_count");
   const cachedCount = parseInt(
-    localStorage.getItem("cachedVisitorCount") || "03"
+    localStorage.getItem("cachedVisitorCount") || "3"
   );
-  if (!lastFetchTime || now - lastFetchTime > FIVE_MINUTES) {
-    fetch(URL_FOR_APPSCRIPT)
-      .then((response) => {
-        if (!response.ok) throw new Error("Network response was not ok");
-        return response.json();
-      })
-      .then((data) => {
-        if (visitorCountElement) {
-          const count = parseInt(data.value) || cachedCount;
-          localStorage.setItem("cachedVisitorCount", count);
-          animateCountUp(visitorCountElement, count, 1200);
-        } else {
-          console.warn("Element with ID 'visitors_count' not found.");
-        }
+  const lastFetch = localStorage.getItem("lastCountFetchTime");
+  const isFresh = lastFetch && Date.now() - lastFetch < 300000;
 
-        localStorage.setItem("lastCountFetchTime", now);
-      })
-      .catch((error) => {
-        console.error("Error fetching visitor count:", error);
-
-        if (visitorCountElement) {
-          animateCountUp(visitorCountElement, cachedCount, 800);
-        }
-      });
+  if (isFresh || !visitorCountElement) {
+    if (visitorCountElement)
+      animateCountUp(visitorCountElement, cachedCount, 800);
   } else {
-    console.log("Visitor count fetched recently; so, skipping fetch.");
+    try {
+      const response = await fetch(APPSCRIPT_URL);
+      const data = await response.json();
+      const newCount = parseInt(data.value) || cachedCount;
 
-    if (visitorCountElement) {
+      localStorage.setItem("cachedVisitorCount", newCount);
+      localStorage.setItem("lastCountFetchTime", Date.now());
+      animateCountUp(visitorCountElement, newCount, 1200);
+    } catch (error) {
       animateCountUp(visitorCountElement, cachedCount, 800);
     }
   }
 
-  // Check if visitor already counted
-  if (localStorage.getItem("visitorCounted") === "true") {
-    console.log("Visitor already counted, skipping API calls.");
-    return;
-  }
+  if (localStorage.getItem("visitorCounted") === "true") return;
 
-  // Fetch IP info and send to Google Apps Script
-  fetch(IPAPI_URL)
-    .then((response) => response.json())
-    .then((data) => {
-      // console.log("IP Data:", data);
+  try {
+    const ipRes = await fetch(IPAPI_URL);
+    const ipData = await ipRes.json();
 
-      const isoString = new Date().toISOString();
-      const date = new Date(isoString);
-      const Timestamp = date.toLocaleString().replace(",", "");
-
-      // console.log(isoString, date, Timestamp);
-
-      const formData = new URLSearchParams();
-      formData.append("ip", data.ip);
-      formData.append(
-        "browserName",
-        navigator.appCodeName + " " + navigator.appVersion
-      );
-      formData.append("osName", navigator.platform);
-      formData.append(
-        "deviceType",
-        navigator.userAgent.includes("Mobile") ? "Mobile" : "Desktop"
-      );
-
-      formData.append("country", data.country_name);
-      formData.append("city", data.city);
-      formData.append("location", `${data.latitude},${data.longitude}`);
-      formData.append("TimeStamp", `${Timestamp}`);
-
-      return fetch(URL_FOR_APPSCRIPT, {
-        method: "POST",
-        body: formData,
-      });
-    })
-    .then((res) => res.json())
-    .then((result) => {
-      console.log("Submitted:", result);
-      // Mark visitor as counted in localStorage
-      localStorage.setItem("visitorCounted", "true");
-    })
-    .catch((err) => {
-      console.error("Error submitting or fetching data:", err);
+    const formData = new URLSearchParams({
+      ip: ipData.ip,
+      browserName: navigator.userAgent,
+      osName: navigator.platform,
+      deviceType: /Mobi|Android/i.test(navigator.userAgent)
+        ? "Mobile"
+        : "Desktop",
+      country: ipData.country_name,
+      city: ipData.city,
+      location: `${ipData.latitude},${ipData.longitude}`,
+      TimeStamp: new Date().toLocaleString(),
     });
+
+    await fetch(APPSCRIPT_URL, { method: "POST", body: formData });
+    localStorage.setItem("visitorCounted", "true");
+  } catch (err) {
+    console.error("Tracking failed:", err);
+  }
 }
 
 const themeToggle = document.querySelector("#theme-button");
-const body = document.body;
+let shootingStarInterval = null;
 
-//===================== STARS ANIMATION ====================//
-
-function generateStarLayer(selector, count) {
-  const starContainer = document.querySelector(selector);
-  let shadowStr = "";
-
-  for (let i = 0; i < count; i++) {
-    const x = Math.floor(Math.random() * 2000);
-    const y = Math.floor(Math.random() * 2000);
-    shadowStr += `${x}px ${y}px var(--first-color)${
-      i !== count - 1 ? "," : ""
-    }`;
-  }
-
-  starContainer.style.boxShadow = shadowStr;
-  starContainer.after.style = starContainer.style;
-
-  // Apply to :after pseudo-element manually
-  const style = document.createElement("style");
-  style.innerHTML = `
-        ${selector}::after {
-          box-shadow: ${shadowStr};
-        }
-      `;
-  document.head.appendChild(style);
-}
-// Shooting Star Generator
-let shootingStarInterval = null; // Store interval ID globally or in closure
-
-function ShootingStar(startStop) {
-  if (startStop === "start") {
-    // Prevent multiple intervals
-    if (shootingStarInterval !== null) return;
-
+const controlShootingStars = (action) => {
+  if (action === "start") {
+    if (shootingStarInterval) return;
     shootingStarInterval = setInterval(() => {
       const star = document.createElement("div");
-      star.classList.add("shooting-star");
-
-      // Random starting position
-      const startX = Math.random() * window.innerWidth;
-      const startY = Math.random() * (window.innerHeight / 2); // only top half
-      star.style.left = `${startX}px`;
-      star.style.top = `${startY}px`;
+      star.className = "shooting-star";
+      star.style.left = `${Math.random() * window.innerWidth}px`;
+      star.style.top = `${Math.random() * (window.innerHeight / 2)}px`;
 
       document.body.appendChild(star);
-
-      // Remove after animation
-      setTimeout(() => {
-        star.remove();
-      }, 2000);
-    }, 1500); // create a shooting star every 2 seconds
-  }
-
-  if (startStop === "stop") {
+      setTimeout(() => star.remove(), 2000);
+    }, 1500);
+  } else {
     clearInterval(shootingStarInterval);
     shootingStarInterval = null;
   }
-}
+};
 
-// Apply saved theme on page load
-const savedTheme = localStorage.getItem("theme");
-if (savedTheme === "dark") {
-  body.classList.add("dark-theme");
-  themeToggle.classList.add("bx-moon");
-  generateStarLayer("#stars", 150);
-  generateStarLayer("#stars2", 100);
-  generateStarLayer("#stars3", 50);
+const generateStars = (selector, count) => {
+  const container = document.querySelector(selector);
+  if (!container) return;
 
-  // Create shooting stars at intervals
-  ShootingStar("start");
-} else {
-  themeToggle.classList.add("bx-sun");
-  // Clear stars by regenerating with 0 count
-  generateStarLayer("#stars", 0);
-  generateStarLayer("#stars2", 0);
-  generateStarLayer("#stars3", 0);
+  const shadows = Array.from({ length: count }, () => {
+    const x = Math.floor(Math.random() * 2000);
+    const y = Math.floor(Math.random() * 2000);
+    return `${x}px ${y}px var(--first-color)`;
+  }).join(", ");
 
-  // Clear the shooting star interval
-  ShootingStar("stop");
-}
+  container.style.boxShadow = shadows;
+  // Use a CSS variable to pass the shadow to the ::after pseudo-element
+  container.style.setProperty("--star-shadow", shadows);
+};
 
-// Toggle theme on click
-themeToggle.addEventListener("click", () => {
-  body.classList.toggle("dark-theme");
-  const isDark = body.classList.contains("dark-theme");
-
-  if (isDark) {
-    generateStarLayer("#stars", 150);
-    generateStarLayer("#stars2", 100);
-    generateStarLayer("#stars3", 50);
-
-    // Create shooting stars at intervals
-    ShootingStar("start");
-  } else {
-    // Clear stars by regenerating with 0 count
-    generateStarLayer("#stars", 0);
-    generateStarLayer("#stars2", 0);
-    generateStarLayer("#stars3", 0);
-
-    // Clear the shooting star interval
-    ShootingStar("stop");
-  }
-
+const updateThemeUI = (isDark) => {
+  document.body.classList.toggle("dark-theme", isDark);
   themeToggle.classList.toggle("bx-moon", isDark);
   themeToggle.classList.toggle("bx-sun", !isDark);
 
-  localStorage.setItem("theme", isDark ? "dark" : "light");
-});
-
-// Smooth scroll for internal links
-const navLinks = document.querySelectorAll(".nav__link");
-const sections = Array.from(navLinks).map((link) => {
-  const href = link.getAttribute("href");
-  return document.querySelector(href);
-});
-// Scroll to section on link click
-window.addEventListener("scroll", () => {
-  const scrollUp = document.getElementById("scroll-up");
-
-  if (window.scrollY >= 200) {
-    scrollUp.classList.add("show-scroll");
+  if (isDark) {
+    generateStars("#stars", 150);
+    generateStars("#stars2", 100);
+    generateStars("#stars3", 50);
+    controlShootingStars("start");
   } else {
-    scrollUp.classList.remove("show-scroll");
+    controlShootingStars("stop");
   }
+};
+
+// Initialize
+const isDarkStored = localStorage.getItem("theme") === "dark";
+updateThemeUI(isDarkStored);
+
+themeToggle.addEventListener("click", () => {
+  const isDarkNow = !document.body.classList.contains("dark-theme");
+  updateThemeUI(isDarkNow);
+  localStorage.setItem("theme", isDarkNow ? "dark" : "light");
 });
 
-// Scroll to section on link click
-document.getElementById("scroll-up").addEventListener("click", function (e) {
+// --- SCROLL MANAGEMENT ---
+const navLinks = document.querySelectorAll(".nav__link");
+const scrollUpBtn = document.getElementById("scroll-up");
+
+// 1. Unified Scroll Listener (Button Visibility & Active Links)
+window.addEventListener("scroll", () => {
+  // Show/Hide Scroll-Up Button
+  scrollUpBtn.classList.toggle("show-scroll", window.scrollY >= 200);
+});
+
+// 2. Smooth Scroll to Top
+scrollUpBtn.addEventListener("click", (e) => {
   e.preventDefault();
-  window.scrollTo({
-    top: 0,
-    behavior: "smooth",
-  });
+  window.scrollTo({ top: 0, behavior: "smooth" });
 });
-function onScroll() {
-  const scrollY = window.pageYOffset;
 
-  sections.forEach((section, index) => {
-    if (!section) return; // safety check
+// 3. Modern Active Link Highlighting (Intersection Observer)
+const observerOptions = { threshold: 0.6 }; // Trigger when 60% of section is visible
 
-    const sectionTop = section.offsetTop - 50; // offset to trigger a bit before
-    const sectionHeight = section.offsetHeight;
-
-    if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
-      // Remove active class from all links
-      navLinks.forEach((link) => link.classList.remove("active-link"));
-
-      // Add active class to current link
-      navLinks[index].classList.add("active-link");
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((entry) => {
+    if (entry.isIntersecting) {
+      const id = entry.target.getAttribute("id");
+      navLinks.forEach((link) => {
+        link.classList.toggle(
+          "active-link",
+          link.getAttribute("href") === `#${id}`
+        );
+      });
     }
   });
-}
+}, observerOptions);
 
-// Update active link on scroll
-window.addEventListener("scroll", onScroll);
-
-// Also keep your click listener to handle clicks
+// Attach observer to sections linked in nav
 navLinks.forEach((link) => {
-  link.addEventListener("click", (e) => {
-    // Remove active-link from all links
-    navLinks.forEach((eachlink) => eachlink.classList.remove("active-link"));
-
-    // Add active-link to clicked one
-    e.currentTarget.classList.add("active-link");
-  });
+  const section = document.querySelector(link.getAttribute("href"));
+  if (section) observer.observe(section);
 });
 
-// Fetch data from the JSON file
+// --- DATA FETCHING ---
 async function fetchData() {
   try {
     const response = await fetch("../assets/js/data.json");
-    if (!response.ok) {
-      throw new Error("Network response was not ok");
-    }
-    const jsonData = await response.json();
-    // console.log(jsonData);
+    if (!response.ok) throw new Error("Fetch failed");
 
-    loadHome(jsonData.home);
-    loadAbout(jsonData.about);
-    loadSkills(jsonData.skills);
-    loadEducation(jsonData.Education);
-    loadProjects(jsonData.projects);
-    loadInternships(jsonData.internshipExperience);
-    loadcertification(jsonData.certification);
+    const data = await response.json();
+
+    loadHome(data.home);
+    loadAbout(data.about);
+    loadSkills(data.skills);
+    loadEducation(data.Education);
+    loadProjects(data.projects);
+    loadInternships(data.internshipExperience);
+    loadcertification(data.certification);
   } catch (error) {
-    console.error("There was an error:", error);
+    console.error("Data error:", error);
   }
 }
 
 function loadHome(homeData) {
-  const home = document.querySelector("#home");
+  const homeSection = document.querySelector("#home");
+
+  if (!homeSection || !homeData) return;
 
   const socialLinksHTML = homeData.socialLinks
     .map(
       (link) => `
-      <a href="${link.url}" target="_blank" class="home__social-link">
-        <i class='${link.icon}'></i>
-      </a>
-    `
+    <a href="${link.url}" target="_blank" class="home__social-link">
+      <i class='${link.icon}'></i>
+    </a>
+  `
     )
     .join("");
 
-  home.innerHTML = `
+  homeSection.innerHTML = `
     <div class="home__container container grid">
       <div class="home__data">
         <span class="home__greeting">${homeData.greeting}</span>
         <h1 class="home__name">${homeData.name}</h1>
-        
         <h3 class="home__education">${homeData.Designation}</h3>
 
         <div class="home__button">
@@ -369,33 +286,41 @@ function loadHome(homeData) {
         <i class='bx bx-mouse home__scroll-icon'></i>
         <span class="home__scroll-name">Scroll Down</span>
       </a>
-    </div>
-  `;
+    </div>`;
 }
 
 function loadAbout(aboutData) {
-  const about = document.querySelector("#about");
-  const aboutBoxInfoList = aboutData.infoBoxes
+  const aboutSection = document.querySelector("#about");
+
+  if (!aboutSection || !aboutData) return;
+
+  // Generate the information boxes (like Experience, Completed, Support)
+  const infoBoxesHTML = aboutData.infoBoxes
     .map(
-      (item) =>
-        `
-   <div class="about__box">
-            <i class='${item.icon} about__icon'></i>
-            <h3 class="about__title">${item.title}</h3>
-            <span class="about__subtitle">${item.subtitle}</span>
-          </div>`
+      (item) => `
+    <div class="about__box">
+      <i class='${item.icon} about__icon'></i>
+      <h3 class="about__title">${item.title}</h3>
+      <span class="about__subtitle">${item.subtitle}</span>
+    </div>
+  `
     )
     .join("");
-  about.innerHTML = `
+
+  aboutSection.innerHTML = `
     <span class="section__subtitle">My Intro</span>
     <h2 class="section__title">About Me</h2>
+    
+    <p class="section__subtitle" style="color: var(--text-color); text-transform: capitalize; font-size: 18px">
+      ${aboutData.smallDescription}
+    </p>
 
     <div class="about__container container grid">
-      <img src="${aboutData.image}" alt="" class="about__img">
+      <img src="${aboutData.image}" alt="Profile Image" class="about__img">
 
       <div class="about__data">
         <div class="about__info"> 
-          ${aboutBoxInfoList}
+          ${infoBoxesHTML}
         </div>
 
         <p class="about__description">${aboutData.description}</p>
@@ -404,354 +329,373 @@ function loadAbout(aboutData) {
       </div>
     </div>`;
 }
-
 function loadSkills(skillsData) {
   const skillsSection = document.querySelector("#skills");
+
+  const LEVEL_MAP = {
+    Beginner: 40,
+    Intermediate: 60,
+    Comfortable: 80,
+  };
 
   const categoriesHTML = skillsData.categories
     .map((category) => {
       // Split skills into 2 columns
       const mid = Math.ceil(category.skills.length / 2);
+
       const createSkillHTML = (skill) => `
-      <div class="skills__data">
-         <img src=${skill.icon} alt=${skill.name}>
-        <div>
-          <h3 class="skills__name">${skill.name}</h3>
-          <div class="slider-container">
-            <div class="slider-fill" data-level="${skill.level}"></div>
+        <div class="skills__data">
+          <img src="${skill.icon}" alt="${skill.name}">
+          <div>
+            <h3 class="skills__name">${skill.name}</h3>
+            <div class="slider-container">
+              <div 
+                class="slider-fill"
+                data-level="${skill.level}"
+                data-percent="${LEVEL_MAP[skill.level] || 0}">
+              </div>
+            </div>
+            <div class="skill-level">${skill.level}</div>
           </div>
-          <div class="skill-level">${skill.level} / 5</div>
         </div>
-      </div>
-    `;
+      `;
 
       return `
-      <div class="skills__content">
-        <h3 class="skills__title">${category.categoryTitle}</h3>
-        <div class="skills__box">
-          <div class="skills__group">
-            ${category.skills.slice(0, mid).map(createSkillHTML).join("")}
-          </div>
-          <div class="skills__group">
-            ${category.skills.slice(mid).map(createSkillHTML).join("")}
+        <div class="skills__content">
+          <h3 class="skills__title">${category.categoryTitle}</h3>
+          <div class="skills__box">
+            <div class="skills__group">
+              ${category.skills.slice(0, mid).map(createSkillHTML).join("")}
+            </div>
+            <div class="skills__group">
+              ${category.skills.slice(mid).map(createSkillHTML).join("")}
+            </div>
           </div>
         </div>
-      </div>
-    `;
+      `;
     })
     .join("");
+
   const logosMarquee = skillsData.categories
-    .map(
-      (category) =>
-        category.skills
-          .map(
-            (skill) =>
-              `<img src="${skill.icon}" alt="${skill.name}" title="${skill.name}">`
-          )
-          .join("") // join inner skill icons
+    .map((category) =>
+      category.skills
+        .map(
+          (skill) =>
+            `<img src="${skill.icon}" alt="${skill.name}" title="${skill.name}">`
+        )
+        .join("")
     )
-    .join(""); // join all categories together
+    .join("");
 
   skillsSection.innerHTML = `
     <span class="section__subtitle">${skillsData.subtitle}</span>
     <h2 class="section__title">${skillsData.title}</h2>
+     <i class="section__subtitle" style="color: var(--text-color);text-transform:capitalize;font-size:18px">${skillsData.description}</i>
+
     <div class="logo-marquee">
-    <div class="logo-marquee--gradient"></div>
-  <div class="logo-marquee--marquee">
-    <div class="logo-marquee--marquee-group">
-      ${logosMarquee}
+      <div class="logo-marquee--gradient"></div>
+      <div class="logo-marquee--marquee">
+        <div class="logo-marquee--marquee-group">
+          ${logosMarquee}
+        </div>
+        <div class="logo-marquee--marquee-group">
+          ${logosMarquee}
+        </div>
+      </div>
     </div>
-<div class="logo-marquee--marquee-group">
-      ${logosMarquee}
-    </div>
-  </div>
-</div>
+
     <div class="skills__container container grid">
       ${categoriesHTML}
     </div>
-  
-   <div class="logo-marquee">
-    <div class="logo-marquee--gradient"></div>
-  <div class="logo-marquee--marquee">
-    <div class="logo-marquee--marquee-group">
-      ${logosMarquee}
-    </div>
-<div class="logo-marquee--marquee-group">
-      ${logosMarquee}
-    </div>
-  </div>
-</div>
 
+    <div class="logo-marquee">
+      <div class="logo-marquee--gradient"></div>
+      <div class="logo-marquee--marquee">
+        <div class="logo-marquee--marquee-group">
+          ${logosMarquee}
+        </div>
+        <div class="logo-marquee--marquee-group">
+          ${logosMarquee}
+        </div>
+      </div>
+      
+    </div>
   `;
 
   // Animate sliders
   document.querySelectorAll(".slider-fill").forEach((slider) => {
-    const level = Number(slider.dataset.level);
+    const percent = slider.dataset.percent || 0;
     slider.style.width = "0%";
+
     setTimeout(() => {
-      slider.style.width = `${(level / 5) * 100}%`;
+      slider.style.width = `${percent}%`;
     }, 200);
   });
 }
 
-function loadEducation(EducationData) {
-  const EducationSection = document.querySelector("#EDUCATION");
+// Global variable to store projects for the modal to access
+let projectList = [];
 
-  const EducationHTML = EducationData.educations
-    .map((education) => {
-      return `
-        <div class="education__card ">
-        <div><img src="${
-          education.image
-        }" alt="Education Image" class="education__img"></div>
-        <div class="education__data">
-          <h3 class="education__name">${education.degree}</h3>
-          <p class="education__institution">${education.institution}</p>
-         
-          ${
-            education.cgpa
-              ? `<p class="education__cgpa">CGPA: ${education.cgpa}</p>`
-              : " "
-          }
-           <p class="education__duration">${education.duration}</p>
-        </div>
-        </div>
-      `;
-    })
+function loadEducation(educationData) {
+  const section = document.querySelector("#EDUCATION");
+  if (!section || !educationData) return;
+
+  const educationHTML = educationData.educations
+    .map(
+      (edu) => `
+    <div class="education__card">
+      <div>
+        <img src="${edu.image}" alt="Education" class="education__img">
+      </div>
+      <div class="education__data">
+        <h3 class="education__name">${edu.degree}</h3>
+        <p class="education__institution">${edu.institution}</p>
+        ${edu.cgpa ? `<p class="education__cgpa">CGPA: ${edu.cgpa}</p>` : ""}
+        <p class="education__duration">${edu.duration}</p>
+      </div>
+    </div>`
+    )
     .join("");
 
-  EducationSection.innerHTML = `
-    <span class="section__subtitle">${EducationData.sectionSubtitle}</span>
-    <h2 class="section__title">${EducationData.sectionTitle}</h2>
-    <div class="education__container container ">
-      <div class="">
-        ${EducationHTML}
-      </div>
-     
-    </div>
-  `;
+  section.innerHTML = `
+    <span class="section__subtitle">${educationData.sectionSubtitle}</span>
+    <h2 class="section__title">${educationData.sectionTitle}</h2>
+    <div class="education__container container">
+       ${educationHTML}
+    </div>`;
 }
 
 function loadProjects(projectData) {
   const projectSection = document.querySelector("#project-section");
+  if (!projectSection) return;
 
-  // Section Headers
-  const sectionHTML = `
-    <span class="section__subtitle">${projectData.sectionTitle}</span>
-    <h2 class="section__title">${projectData.sectionSubtitle}</h2>
+  projectList = projectData.projects; // Store globally
+  let visibleCount = 3;
+
+  projectSection.innerHTML = `
+    <span class="section__subtitle">${projectData.sectionSubtitle}</span>
+    <h2 class="section__title">${projectData.sectionTitle}</h2>
     <div class="work__container container grid" id="project-container"></div>
     <div style="text-align:center; margin-top:2rem;">
-      <button id="toggle-btn" class="toggle-btn">Show More</button>
-    </div>
-  `;
-
-  projectSection.innerHTML = sectionHTML;
+      <button id="toggle-btn" class="toggle-btn button">Show More</button>
+    </div>`;
 
   const container = document.querySelector("#project-container");
   const toggleBtn = document.querySelector("#toggle-btn");
 
-  let visibleCount = 3;
-  const increment = 3;
-
-  function renderProjects() {
-    const visibleProjects = projectData.projects.slice(0, visibleCount);
-
-    container.innerHTML = visibleProjects
-      .map((project, index) => {
-        const alertAttr = project.link.includes("59k265GmL56vvrm")
-          ? `onclick="alert('The chatbot have been protected\\npassword : reverse(654321)')"`
-          : "";
-        return `
-        <div class="work__card" style="animation-delay: ${index * 0.1}s;">
-          <img src="${project.image}" alt="${project.title}" class="work__img">
-          <h3 class="work__title">${project.title}</h3>
-
-          <div style="display: flex; justify-content: space-between;margin-top: 1rem;">
-            <a href="${
-              project.knowMore
-            }" ${alertAttr} target="_blank" class="work__button">
-              Know More <i class='bx bx-right-arrow work__icon'></i>
-            </a>
-            <a href="${
-              project.link
-            }" ${alertAttr} target="_blank" class="work__button">
-              Live <i class='bx bx-right-arrow work__icon'></i>
-            </a>
-          </div>
+  const renderProjects = () => {
+    container.innerHTML = projectList
+      .slice(0, visibleCount)
+      .map(
+        (project, index) => `
+      <div class="work__card" style="animation-delay: ${index * 0.1}s;">
+        <img src="${project.image}" alt="${project.title}" class="work__img">
+        <h3 class="work__title">${project.title}</h3>
+       
+  <div style="
+    width: 100px;
+    height: 1px;
+    margin: 10px auto ;
+    background: linear-gradient(50deg, transparent, var(--first-color-alt), transparent);
+    opacity: 0.5;
+  "></div>
+        <div >
+          <button onclick="handleOpenModal(${index})"  class="work__button">
+            Know More <i class='bx bx-right-arrow-alt work__icon'></i>
+          </button>
         </div>
-      `;
-      })
+      </div>`
+      )
       .join("");
 
-    toggleBtn.innerHTML =
-      visibleCount >= projectData.projects.length
-        ? `Show Less <i class='bx bx-chevron-up'></i>`
-        : `Show More <i class='bx bx-chevron-down'></i>`;
-  }
+    const isAllShown = visibleCount >= projectList.length;
+    toggleBtn.innerHTML = isAllShown
+      ? `Show Less <i class='bx bx-chevron-up'></i>`
+      : `Show More <i class='bx bx-chevron-down'></i>`;
+  };
 
-  // Initial render
   renderProjects();
 
-  // Button event
   toggleBtn.addEventListener("click", () => {
-    if (visibleCount >= projectData.projects.length) {
-      // Reset to show only 3
-      visibleCount = 3;
-    } else {
-      // Show more
-      visibleCount += increment;
-    }
-
+    visibleCount = visibleCount >= projectList.length ? 3 : visibleCount + 3;
     renderProjects();
   });
 }
 
-// Function to load internships
+function handleOpenModal(index) {
+  const project = projectList[index];
+  const modal = document.getElementById("project-modal");
+  const techContainer = document.getElementById("modal-tech");
+  const noteContainer = document.getElementById("modal-note");
+
+  // Fill Basic Info
+  document.getElementById("modal-title").textContent = project.title;
+  document.getElementById("modal-description").textContent =
+    project.description;
+  document.getElementById("modal-github").href = project.knowMore;
+  document.getElementById("modal-img").src = project.image;
+  document.getElementById("modal-live").href = project.link;
+
+  // 1. Handle Tech Stack Badges
+  techContainer.innerHTML = project.techStack
+    .map((tech) => `<span class="tech-badge">${tech}</span>`)
+    .join("");
+
+  // 2. Handle Chatbot Note (Replaces Alert)
+  if (project.link.includes("59k265GmL56vvrm")) {
+    noteContainer.innerHTML = `<strong>Note:</strong> This chatbot is protected. <br> Password: <code>reverse(654321)</code>`;
+    noteContainer.classList.add("show");
+  } else {
+    noteContainer.classList.remove("show");
+    noteContainer.innerHTML = "";
+  }
+
+  modal.classList.add("active-modal");
+  document.body.style.overflow = "hidden";
+}
+
+function closeModal() {
+  document.getElementById("project-modal").classList.remove("active-modal");
+  document.body.style.overflow = "auto";
+}
+
+// Close on background click
+window.addEventListener("click", (e) => {
+  const modal = document.getElementById("project-modal");
+  if (e.target === modal) closeModal();
+});
+
 function loadInternships(internshipData) {
-  const internshipSection = document.querySelector("#EXPERIENCE");
+  const section = document.querySelector("#EXPERIENCE");
+  if (!section || !internshipData) return;
 
   const internshipsHTML = internshipData.internships
     .map(
-      (internship) => `
-      <div class="internship__card">
-        <h3 class="internship__company">${internship.company}</h3>
-        <p class="internship__position">
-          <strong>${internship.position}</strong> |
-          <span class="internship__duration">${internship.duration}</span>
-        </p>
-        <p class="internship__description">${internship.description}</p>
-        <a href="${internship.certificate}" class="internship__button" target="_blank">
-          View Certificate <i class='bx bx-link-external internship__icon'></i>
-        </a>
-      </div>
-    `
+      (intern) => `
+    <div class="internship__card">
+      <h3 class="internship__company">${intern.company}</h3>
+      <p class="internship__position">
+        <strong>${intern.position}</strong> | 
+        <span class="internship__duration">${intern.duration}</span>
+      </p>
+      <p class="internship__description">${intern.description}</p>
+      <a href="${intern.certificate}" class="internship__button" target="_blank">
+        View Certificate <i class='bx bx-link-external internship__icon'></i>
+      </a>
+    </div>
+  `
     )
     .join("");
 
-  internshipSection.innerHTML = `
+  section.innerHTML = `
     <span class="section__subtitle">${internshipData.sectionSubtitle}</span>
     <h2 class="section__title">${internshipData.sectionTitle}</h2>
     <div class="internship__container container grid">
       ${internshipsHTML}
-    </div>
-  `;
+    </div>`;
 }
+
 function loadcertification(certificationData) {
-  const certificationSection = document.querySelector("#CERTIFICATION");
-
-  // Render section headers and containers
-  const sectionHTML = `
-    <span class="section__subtitle">${certificationData.sectionSubtitle}</span>
-    <h2 class="section__title">${certificationData.sectionTitle}</h2>
-    <div class="internship__container container grid" id="certification-container"></div>
-    <div style="text-align:center; margin-top:2rem;">
-      <button id="cert-toggle-btn" class="toggle-btn">Show More</button>
-    </div>
-  `;
-
-  certificationSection.innerHTML = sectionHTML;
-
-  const container = document.querySelector("#certification-container");
-  const toggleBtn = document.querySelector("#cert-toggle-btn");
+  const section = document.querySelector("#CERTIFICATION");
+  if (!section || !certificationData) return;
 
   let visibleCount = 3;
-  const increment = 3;
+  const certificates = certificationData.certificates;
 
-  function renderCertificates() {
-    const visibleCertificates = certificationData.certificates.slice(
-      0,
-      visibleCount
-    );
+  // Initialize Structure
+  section.innerHTML = `
+    <span class="section__subtitle">${certificationData.sectionSubtitle}</span>
+    <h2 class="section__title">${certificationData.sectionTitle}</h2>
+    <div class="internship__container container grid" id="cert-container"></div>
+    <div style="text-align:center; margin-top:2rem;">
+      <button id="cert-toggle-btn" class="toggle-btn button">Show More</button>
+    </div>`;
 
-    container.innerHTML = visibleCertificates
+  const container = document.querySelector("#cert-container");
+  const toggleBtn = document.querySelector("#cert-toggle-btn");
+
+  const render = () => {
+    container.innerHTML = certificates
+      .slice(0, visibleCount)
       .map(
-        (certificate, index) => `
-        <div class="internship__card" style="animation-delay: ${index * 0.1}s;">
-         
-          <h3 class="internship__company">${certificate.title}</h3>
-          <p class="internship__description">${certificate.description}</p>
-          <div style="margin-top: 1rem;">
-            <a href="${
-              certificate.link
-            }" class="internship__button" target="_blank">
-              View Certificate <i class='bx bx-link-external internship__icon'></i>
-            </a>
-          </div>
+        (cert, index) => `
+      <div class="internship__card" style="animation-delay: ${index * 0.1}s;">
+        <h3 class="internship__company">${cert.title}</h3>
+        <p class="internship__description">${cert.description}</p>
+        <div style="margin-top: 1rem;">
+          <a href="${cert.link}" class="internship__button" target="_blank">
+            View Certificate <i class='bx bx-link-external internship__icon'></i>
+          </a>
         </div>
-      `
+      </div>
+    `
       )
       .join("");
 
-    toggleBtn.innerHTML =
-      visibleCount >= certificationData.certificates.length
-        ? `Show Less <i class='bx bx-chevron-up'></i>`
-        : `Show More <i class='bx bx-chevron-down'></i>`;
-  }
+    const isAllShown = visibleCount >= certificates.length;
+    toggleBtn.innerHTML = isAllShown
+      ? `Show Less <i class='bx bx-chevron-up'></i>`
+      : `Show More <i class='bx bx-chevron-down'></i>`;
+  };
 
-  // Initial render
-  renderCertificates();
+  render();
 
-  // Toggle button event
   toggleBtn.addEventListener("click", () => {
-    if (visibleCount >= certificationData.certificates.length) {
-      visibleCount = 3; // Reset
-    } else {
-      visibleCount += increment; // Show more
-    }
-
-    renderCertificates();
+    visibleCount = visibleCount >= certificates.length ? 3 : visibleCount + 3;
+    render();
   });
 }
 
-// Call the fetchData function to start everything
+// Start the application
 fetchData();
 
-document.getElementById("sendmessage").addEventListener("click", function (e) {
-  e.preventDefault(); // prevent default form submission
+// --- CONTACT FORM LOGIC ---
+document.getElementById("sendmessage").addEventListener("click", (e) => {
+  e.preventDefault();
 
   const name = document.getElementById("name").value.trim();
   const email = document.getElementById("email").value.trim();
   const message = document.getElementById("message").value.trim();
 
-  const mailtoLink = `mailto:mohammadibbu008@gmail.com?subject=Message from ${encodeURIComponent(
-    name
-  )}&body=${encodeURIComponent(message)}%0D%0A%0D%0AFrom: ${encodeURIComponent(
-    email
-  )}`;
-
-  // Open the user's default email client
-  if (name === "" || email === "" || message === "") {
+  // 1. Validation (Check before doing anything else)
+  if (!name || !email || !message) {
     alert("Please fill in all fields.");
     return;
-  } else if (!email.includes("@")) {
+  }
+
+  if (!email.includes("@")) {
     alert("Please enter a valid email address.");
     return;
-  } else if (message.length < 10) {
-    alert("Message should be at least 10 characters long.");
-    return;
-  } else if (message.length > 500) {
-    alert("Message should be less than 500 characters.");
+  }
+
+  if (message.length < 10 || message.length > 500) {
+    alert("Message must be between 10 and 500 characters.");
     return;
   }
-  window.location.href = mailtoLink;
+
+  // 2. Execution
+  const subject = encodeURIComponent(`Message from ${name}`);
+  const body = encodeURIComponent(`${message}\n\nFrom: ${email}`);
+
+  window.location.href = `mailto:mohammadibbu008@gmail.com?subject=${subject}&body=${body}`;
 });
 
-ScrollReveal({
+// --- SCROLL REVEAL ANIMATIONS ---
+const sr = ScrollReveal({
   distance: "50px",
   duration: 1000,
   easing: "ease-out",
-  reset: false, // true = animation occurs every time you scroll up/down
+  reset: false,
 });
 
-// Example usage per section
-ScrollReveal().reveal(".home", { origin: "top" });
-ScrollReveal().reveal(".about", { origin: "left", delay: 200 });
-ScrollReveal().reveal(".skills", { origin: "right", delay: 300 });
-ScrollReveal().reveal(".education", { origin: "bottom", delay: 400 });
-ScrollReveal().reveal(".experience", { origin: "top", delay: 500 });
-ScrollReveal().reveal(".work", { origin: "bottom", delay: 600 });
-ScrollReveal().reveal(".contact__content", { origin: "left", delay: 700 });
-ScrollReveal().reveal(".footer__container", { origin: "bottom", delay: 800 });
+// Grouped reveals for better readability
+sr.reveal(".home", { origin: "top" });
+sr.reveal(".about", { origin: "left", delay: 200 });
+sr.reveal(".skills", { origin: "right", delay: 300 });
+sr.reveal(".education", { origin: "bottom", delay: 400 });
+sr.reveal(".experience, .work", { origin: "top", interval: 100 });
+sr.reveal(".contact__content", { origin: "left", delay: 700 });
+sr.reveal(".footer__container", { origin: "bottom", delay: 800 });
 
 // Custom cursor functionality
 const cursor = document.querySelector(".cursor");

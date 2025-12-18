@@ -43,53 +43,62 @@
         "subtitle": "Open to Freelance & Collaboration"
       }
     ],
-    "description": "Aspiring web developer skilled in HTML, CSS, JavaScript, Python, and frameworks like Node.js and Bootstrap. Passionate about building efficient, user-centered digital solutions and continuously growing through real-world experience."
+    "smallDescription": "“Open to entry-level roles, internships, and freelance opportunities.",
+    "description": "Aspiring full-stack web developer with internship experience and strong foundations in JavaScript, Python, and web development. Passionate about building responsive, efficient applications and continuously learning through real-world projects and collaboration."
   },
+
   "skills": {
     "subtitle": "My Abilities",
+    "description": "“Skill levels indicate current familiarity and are continuously improving.",
     "title": "Skills",
+
+    "levelMap": {
+      "Beginner": 2,
+      "Intermediate": 3,
+      "Comfortable": 4
+    },
     "categories": [
       {
         "categoryTitle": "Frontend Development",
         "skills": [
           {
             "name": "HTML",
-            "level": 4,
+            "level": "Comfortable",
             "icon": "https://img.icons8.com/color/48/000000/html-5.png"
           },
           {
             "name": "CSS",
-            "level": 4,
+            "level": "Comfortable",
             "icon": "https://img.icons8.com/color/48/000000/css3.png"
           },
           {
-            "name": "Javascript",
-            "level": 4,
+            "name": "JavaScript",
+            "level": "Comfortable",
             "icon": "https://img.icons8.com/color/48/000000/javascript.png"
           },
           {
             "name": "Bootstrap",
-            "level": 2,
+            "level": "Beginner",
             "icon": "https://img.icons8.com/color/48/000000/bootstrap.png"
           },
           {
-            "name": "Tailwind",
-            "level": 3,
+            "name": "Tailwind CSS",
+            "level": "Intermediate",
             "icon": "https://img.icons8.com/color/48/tailwindcss.png"
           },
           {
             "name": "Git",
-            "level": 4,
+            "level": "Comfortable",
             "icon": "https://img.icons8.com/color/48/000000/git.png"
           },
           {
             "name": "GitHub",
-            "level": 4,
+            "level": "Comfortable",
             "icon": "https://img.icons8.com/color/48/000000/github.png"
           },
           {
             "name": "React",
-            "level": 2,
+            "level": "Beginner",
             "icon": "https://img.icons8.com/external-tal-revivo-color-tal-revivo/48/external-react-a-javascript-library-for-building-user-interfaces-logo-color-tal-revivo.png"
           }
         ]
@@ -98,127 +107,168 @@
         "categoryTitle": "Backend Development",
         "skills": [
           {
-            "name": "Node JS",
-            "level": 3,
+            "name": "Node.js",
+            "level": "Intermediate",
             "icon": "https://img.icons8.com/color/48/000000/nodejs.png"
           },
           {
-            "name": "ML/DL",
-            "level": 2,
-            "icon": "https://img.icons8.com/cotton/48/brain-3.png"
-          },
-          {
-            "name": "Mongo DB",
-            "level": 3,
-            "icon": "https://img.icons8.com/color/48/000000/mongodb.png"
-          },
-          {
             "name": "Python",
-            "level": 3,
+            "level": "Intermediate",
             "icon": "https://img.icons8.com/color/48/000000/python.png"
           },
           {
             "name": "Flask",
-            "level": 2,
+            "level": "Beginner",
             "icon": "https://img.icons8.com/color/48/000000/flask.png"
           },
           {
+            "name": "MongoDB",
+            "level": "Intermediate",
+            "icon": "https://img.icons8.com/color/48/000000/mongodb.png"
+          },
+          {
             "name": "MySQL",
-            "level": 3,
+            "level": "Intermediate",
             "icon": "https://img.icons8.com/color/48/000000/mysql.png"
           },
           {
-            "name": "Rest Api",
-            "level": 4,
+            "name": "REST API",
+            "level": "Comfortable",
             "icon": "https://img.icons8.com/color/48/000000/api.png"
           },
           {
             "name": "Firebase",
-            "level": 3,
+            "level": "Intermediate",
             "icon": "https://img.icons8.com/color/48/000000/firebase.png"
+          },
+          {
+            "name": "ML/DL",
+            "level": "Beginner",
+            "icon": "https://img.icons8.com/cotton/48/brain-3.png"
           }
         ]
       }
     ]
   },
   "projects": {
-    "sectionTitle": "Recent Works ",
+    "sectionTitle": "Recent Works",
     "sectionSubtitle": "My Projects",
     "projects": [
       {
+        "title": "MRP GlobalTraders – Client Project",
+        "category": "Web App",
+        "techStack": [
+          "React",
+          "Tailwind CSS",
+          "Node.js",
+          "Express",
+          "Firebase"
+        ],
+        "description": "Developed a modern, fully responsive import-export web application for a real-world client to showcase agricultural products professionally and enhance global buyer engagement. Implemented product listings, image gallery, FAQ section, and a secure admin panel for content management. Integrated direct WhatsApp and phone communication for seamless inquiries, optimized performance, and ensured cross-device compatibility.",
+        "image": "assets/img/mrptraders.png",
+        "knowMore": "https://github.com/Mohammadibbu/MRPTraders",
+        "link": "https://mrptraders-frontend.onrender.com/"
+      },
+      {
         "title": "Anime Recommendation Engine",
-        "description": "Built using Python, Flask, scikit-learn, and Firebase to suggest anime based on user preferences with cosine similarity.",
+        "category": "Machine Learning",
+        "techStack": [
+          "Python",
+          "Flask",
+          "Scikit-Learn",
+          "Firebase",
+          "Machine Learning"
+        ],
+        "description": "Designed and implemented a content-based anime recommendation system that analyzes user preferences and viewing history. Utilized cosine similarity and machine learning techniques to generate accurate recommendations. Built a Flask-based backend with Firebase integration for user data storage, delivering personalized suggestions through a simple and intuitive web interface.",
         "image": "assets/img/anime.png",
         "knowMore": "https://github.com/Mohammadibbu/Anime-recommendation-Engine-using-ML",
         "link": "https://anime-recommendation-engine-using-ml-khmb.onrender.com/"
       },
       {
         "title": "Portfolio Website",
-        "description": "A personal portfolio website showcasing my skills, projects, and experiences. Built with HTML, CSS, and JavaScript.",
+        "category": "Frontend",
+        "techStack": [
+          "HTML5",
+          "CSS3",
+          "JavaScript",
+          "ScrollReveal",
+          "Boxicons"
+        ],
+        "description": "Created a personal portfolio website to showcase projects, technical skills, and professional experience with a clean and modern UI. Implemented dynamic project loading using JSON data, smooth scroll animations with ScrollReveal, and interactive icons for enhanced user experience. Focused on responsive design, accessibility, and performance optimization.",
         "image": "assets/img/PortfolioProject.png",
         "knowMore": "https://github.com/Mohammadibbu/portfolio-website",
         "link": "https://ibbu-portfolio.netlify.app/"
       },
       {
         "title": "Mind Reader",
-        "description": "Mind Reader is an interactive web application that predicts the number you are thinking of! Through a series of four simple yes/no questions, the system uses your answers to determine the exact number you have in mind. ",
+        "category": "Interactive",
+        "techStack": ["JavaScript", "HTML", "CSS", "Logic Algorithms"],
+        "description": "Developed an interactive and engaging web application that predicts a number chosen by the user using binary logic. The application guides users through a sequence of logical yes/no questions and determines the number accurately. Focused on clean UI design, smooth transitions, and logical efficiency to provide a fun user experience.",
         "image": "assets/img/guessmaster.jpg",
         "knowMore": "https://github.com/Mohammadibbu/MindReader",
         "link": "https://mohammadibbu.github.io/MindReader/"
       },
       {
-        "title": "islamic Quiz App",
-        "description": "Islamic Quiz App is a web-based platform to manage and conduct timed Islamic quizzes. Built with React, Node.js, and Firebase, it supports question scheduling, candidate tracking, and auto-result evaluation.",
+        "title": "Islamic Quiz App",
+        "category": "Fullstack",
+        "techStack": ["React", "Node.js", "Firebase", "Tailwind CSS"],
+        "description": "Built a full-stack quiz management platform designed to conduct timed Islamic quizzes efficiently. Features include question scheduling, candidate registration, real-time timer control, and automated result evaluation. Implemented Firebase for authentication and data storage, ensuring scalability, reliability, and a smooth user experience.",
         "image": "assets/img/islamicquiz.png",
         "knowMore": "https://github.com/Mohammadibbu/islamicquizbackup",
         "link": "https://islamic-quiz-tntj.netlify.app/"
       },
       {
-        "title": "IBBU Chatbot - Built with Chatling AI",
-        "description": "A personal AI chatbot that assists with resume-related queries, built using Chatling AI. It provides instant responses to questions about my resume, skills, and experiences.",
+        "title": "IBBU Chatbot - Chatling AI",
+        "category": "AI / Automation",
+        "techStack": ["Chatling AI", "NLP", "LLM Integration"],
+        "description": "Developed a personal AI-powered chatbot trained on my resume and professional background to assist website visitors. The chatbot answers queries related to skills, education, projects, and experience using natural language processing and large language model integration. Designed to improve visitor engagement and provide instant, intelligent responses.",
         "image": "assets/img/Chatbot.png",
         "knowMore": "https://share.chatling.ai/s/59k265GmL56vvrm",
-        "link": "https://share.chatling.ai/s/59k265GmL56vvrm"
+        "link": "https://share.chatling.ai/s/59k265GmL56vvrm",
+        "notes": "Password: reverse(654321)"
       },
       {
-        "title": "PG Result Management System (UNOM)",
-        "description": "A web system developed to automate result management for postgraduate students using Node.js, MySQL, Handlebars, and Bootstrap.",
+        "title": "PG Result Management (UNOM)",
+        "category": "Backend",
+        "techStack": ["Node.js", "MySQL", "Handlebars", "Bootstrap"],
+        "description": "Created a backend-driven result management system to automate postgraduate result processing for the University of Madras. Implemented secure authentication, result generation, and structured data handling using MySQL. The system simplifies administrative tasks, reduces manual errors, and ensures secure access to academic records.",
         "image": "assets/img/Pgresult.png",
         "knowMore": "https://github.com/Mohammadibbu/Result-management",
         "link": "https://github.com/Mohammadibbu/Result-management"
       },
       {
         "title": "RTO Finder",
-        "description": "A web application that helps users find the nearest RTO office based on their location. It uses Google Maps API for location services and provides information about RTO offices.",
+        "category": "Utilities",
+        "techStack": ["Google Maps API", "JavaScript", "HTML", "CSS"],
+        "description": "Developed a location-based utility application that helps users identify nearby RTO offices using Google Maps API. Displays accurate office locations, contact details, and directions. Focused on real-time location access, usability, and responsive layout for easy access across devices.",
         "image": "assets/img/RTO.jpg",
         "knowMore": "https://github.com/Mohammadibbu/rto-finder-main",
         "link": "https://mohammadibbu.github.io/rto-finder-main/"
       },
       {
         "title": "Blood Donor Finder",
-        "description": "A web application that connects blood donors with those in need. It allows users to register as donors and search for available donors based on blood type and location.",
+        "category": "Social Cause",
+        "techStack": ["JavaScript", "Firebase", "HTML", "CSS"],
+        "description": "Built a social-impact web platform that connects blood donors with individuals in urgent need. Users can search donors based on blood group and location, while Firebase handles real-time data storage and updates. The application promotes community support and fast access to life-saving resources.",
         "image": "assets/img/Blooddonor.jpg",
-
         "knowMore": "https://github.com/Mohammadibbu/BloodDonation",
         "link": "https://mohammadibbu.github.io/BloodDonation/"
       },
       {
         "title": "Password Strength Checker",
-
-        "description": "A web application that checks the strength of a password based on various criteria such as length, character variety, and common patterns.",
-
+        "category": "Security",
+        "techStack": ["JavaScript", "RegEx", "HTML", "CSS"],
+        "description": "Developed a real-time password strength evaluation tool that analyzes password length, character variety, and complexity using regular expressions. Provides instant visual feedback to users, helping them create stronger and more secure passwords while following modern security best practices.",
         "image": "assets/img/PasswordStrengthChecker.png",
-
         "knowMore": "https://github.com/Mohammadibbu/password-strength-checker",
         "link": "https://mohammadibbu.github.io/password-strength-checker/"
       },
       {
         "title": "Random Password Generator",
-
-        "description": "A web application that generates random passwords based on user-defined criteria such as length and character types. It ensures strong password creation for enhanced security.",
-
+        "category": "Security",
+        "techStack": ["JavaScript", "Crypto API", "HTML", "CSS"],
+        "description": "Created a secure random password generator using the browser Crypto API to ensure cryptographically strong passwords. Allows users to customize password length and character sets, generating reliable passwords that improve account security and protect against brute-force attacks.",
         "image": "assets/img/RandomPasswordGenerator.jpg",
-
         "knowMore": "https://github.com/Mohammadibbu/random-password-generator",
         "link": "https://mohammadibbu.github.io/random-password-generator/"
       }

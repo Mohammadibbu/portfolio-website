@@ -51,6 +51,44 @@
   </head>
 
   <body>
+    <div id="project-modal" class="project__modal">
+      <div class="modal__card">
+        <i class="bx bx-x modal__close" onclick="closeModal()"></i>
+
+        <div class="modal__body">
+          <div class="modal__image-container">
+            <img id="modal-img" src="your-image.jpg" alt="Project Preview" />
+          </div>
+
+          <div class="modal__info">
+            <h2 id="modal-title" class="modal__title">Project Title</h2>
+
+            <div id="modal-tech" class="modal__tech">
+              <span class="tech-badge">React</span>
+              <span class="tech-badge">Firebase</span>
+              <span class="tech-badge">Tailwind</span>
+            </div>
+
+            <p id="modal-description" class="modal__text">
+              Detailed project description goes here. By placing this inside
+              modal__body, it will scroll if the text is very long, especially
+              on mobile devices.
+            </p>
+
+            <div id="modal-note" class="modal__note"></div>
+          </div>
+        </div>
+
+        <div class="modal__actions">
+          <a id="modal-live" href="#" target="_blank" class="btn-primary">
+            Live Demo <i class="bx bx-link-external"></i>
+          </a>
+          <a id="modal-github" href="#" target="_blank" class="btn-secondary">
+            View Code <i class="bx bxl-github"></i>
+          </a>
+        </div>
+      </div>
+    </div>
     <!--========== STARS ANIMATIONS ========= -->
     <div id="stars" class="stars small"></div>
     <div id="stars2" class="stars medium"></div>
@@ -115,19 +153,18 @@
         </div>
 
         <!--=============== theme change button ===============-->
+        <div class="color-switcher-wrapper">
+          <div class="color-hint" id="color-hint">Click for a new vibe! ✨</div>
 
-        <div>
-          <i
-            class="bx bx-refresh"
-            title="Refresh to change color"
+          <button
             id="updatecolors"
-            style="cursor: pointer"
-          ></i>
-          <i
-            class="bx bx-moon"
-            id="theme-button"
-            style="margin-left: 15px; cursor: pointer"
-          ></i>
+            class="color-btn"
+            title="Generate New Palette"
+          >
+            <i class="bx bx-palette"></i>
+          </button>
+
+          <i class="bx bx-moon theme-button" id="theme-button"></i>
         </div>
       </nav>
     </header>
