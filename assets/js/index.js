@@ -26,22 +26,18 @@ window.addEventListener("load", () => {
   const randomPhrase = phrases[Math.floor(Math.random() * phrases.length)];
   document.getElementById("color-hint").innerText = randomPhrase + " ✨";
   const updateColors = () => {
-    // 1. Play Animation
     updateBtn.classList.add("animating");
     setTimeout(() => updateBtn.classList.remove("animating"), 600);
 
-    // 2. Hide Hint Bubble after first click
     if (colorHint) {
       colorHint.classList.add("hint-hidden");
     }
 
-    // 3. Generate Your Palette Logic
     const mainHue = Math.floor(Math.random() * 360);
     const complementHue = (mainHue + 180) % 360;
     const saturation = `${Math.floor(Math.random() * 21) + 80}%`;
     const lightness = `${Math.floor(Math.random() * 21) + 40}%`;
 
-    // 4. Set CSS Variables
     root.style.setProperty("--first-hue", mainHue);
     root.style.setProperty("--second-hue", complementHue);
     root.style.setProperty("--sat", saturation);
@@ -158,7 +154,7 @@ const generateStars = (selector, count) => {
   }).join(", ");
 
   container.style.boxShadow = shadows;
-  // Use a CSS variable to pass the shadow to the ::after pseudo-element
+
   container.style.setProperty("--star-shadow", shadows);
 };
 
@@ -204,7 +200,7 @@ scrollUpBtn.addEventListener("click", (e) => {
 });
 
 // 3. Modern Active Link Highlighting (Intersection Observer)
-const observerOptions = { threshold: 0.6 }; // Trigger when 60% of section is visible
+const observerOptions = { threshold: 0.6 };
 
 const observer = new IntersectionObserver((entries) => {
   entries.forEach((entry) => {
