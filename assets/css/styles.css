@@ -95,7 +95,10 @@ html {
   border-radius: 50%;
   transform: translate(-50%, -50%);
   z-index: 9999999;
-  transition: transform 0.3s ease, background 0.3s ease, border-color 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    background 0.3s ease,
+    border-color 0.3s ease;
 }
 
 .cursor {
@@ -744,7 +747,8 @@ img {
 }
 
 .home__img {
-  width: 140px;
+  /* width: 140px; */
+  width: 165px;
   filter: contrast(1.1) brightness(1.1) saturate(1.2) grayscale(0.1) sepia(0.1)
     hue-rotate(10deg);
   transition: all 0.4s ease;
@@ -2237,7 +2241,7 @@ img {
   }
 
   .home__img {
-    width: 190px;
+    width: 220px;
   }
   .home__social-link {
     padding: 0.4rem;
@@ -2358,11 +2362,8 @@ img {
 }
 
 .logo-marquee--gradient {
-  background-image: linear-gradient(
-      90deg,
-      var(--body-color) 20%,
-      hsla(200, 9%, 93%, 0) 35%
-    ),
+  background-image:
+    linear-gradient(90deg, var(--body-color) 20%, hsla(200, 9%, 93%, 0) 35%),
     linear-gradient(270deg, var(--body-color) 20%, hsla(200, 9%, 93%, 0) 35%);
   top: 2.5rem;
   height: 64px;
@@ -2405,11 +2406,8 @@ img {
     margin: 0 10px;
   }
   .logo-marquee--gradient {
-    background-image: linear-gradient(
-        90deg,
-        var(--body-color) 5%,
-        hsla(200, 9%, 93%, 0) 25%
-      ),
+    background-image:
+      linear-gradient(90deg, var(--body-color) 5%, hsla(200, 9%, 93%, 0) 25%),
       linear-gradient(270deg, var(--body-color) 5%, hsla(200, 9%, 93%, 0) 25%);
   }
 }
@@ -2419,11 +2417,8 @@ img {
     margin: 0 10px;
   }
   .logo-marquee--gradient {
-    background-image: linear-gradient(
-        90deg,
-        var(--body-color) 5%,
-        hsla(200, 9%, 93%, 0) 25%
-      ),
+    background-image:
+      linear-gradient(90deg, var(--body-color) 5%, hsla(200, 9%, 93%, 0) 25%),
       linear-gradient(270deg, var(--body-color) 5%, hsla(200, 9%, 93%, 0) 25%);
   }
 }
@@ -2769,7 +2764,9 @@ img {
   box-shadow: 0 10px 20px hsla(var(--first-hue), var(--sat), 10%, 0.3);
   pointer-events: none;
   animation: floating 2.5s infinite ease-in-out;
-  transition: opacity 0.5s ease, transform 0.5s ease;
+  transition:
+    opacity 0.5s ease,
+    transform 0.5s ease;
   z-index: 100;
 }
 
