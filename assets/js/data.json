@@ -310,13 +310,13 @@
     "sectionSubtitle": "My Education",
     "educations": [
       {
-        "image": "https://upload.wikimedia.org/wikipedia/en/thumb/2/2e/Madras_University_Seal.svg/270px-Madras_University_Seal.svg.png",
+        "image": "assets/img/UNOM.png",
         "degree": "Master of Science in Information Technology",
         "institution": "University of Madras, Guindy Campus",
         "duration": "Aug 2023 – Apr 2025"
       },
       {
-        "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4b41HEJdsmowe7Acpb0Gbf7OYOCwvof8MSQ&s",
+        "image": "assets/img/APOLLO.png",
         "degree": "Bachelor of Computer Applications (BCA)",
         "institution": "Apollo Arts And Science College, Poonamallee",
         "duration": "July 2020 – Apr 2023",
