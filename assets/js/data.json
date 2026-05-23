@@ -290,6 +290,13 @@
     "sectionSubtitle": "My Internship",
     "internships": [
       {
+        "company": "Zignus Group Pvt. Ltd., Chennai",
+        "position": "Web Development & Digital Marketing Intern",
+        "duration": "Jan 2026 – Feb 2026",
+        "description": "Worked on website maintenance, front-end support, SEO activities, content creation, and digital marketing coordination.",
+        "certificate": "https://drive.google.com/file/d/1HoUBBBNFrnQP7-e5x3jBTjDXPbYcWK20/view"
+      },
+      {
         "company": "Cubic Designz, Chennai",
         "position": "Web Developer Intern",
         "duration": "Jan 2025 – Mar 2025",
