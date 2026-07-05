@@ -1832,8 +1832,16 @@ img {
 @media screen and (max-width: 576px) {
   .internship__card--featured {
     padding: 1.5rem;
+    width: 90%;
   }
-
+  .internship__card--featured .internship__duration--featured {
+    color: var(--first-color);
+    background-color: hsla(var(--first-hue), var(--sat), var(--lig), 0.12);
+    border-color: hsla(var(--first-hue), var(--sat), var(--lig), 0.2);
+  }
+  .internship__card--featured .internship__company--featured {
+    color: var(--first-color);
+  }
   .internship__header--featured {
     padding-right: 0;
   }
