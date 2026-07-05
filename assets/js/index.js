@@ -75,7 +75,7 @@ async function trackVisitor() {
 
   const visitorCountElement = document.getElementById("visitors_count");
   const cachedCount = parseInt(
-    localStorage.getItem("cachedVisitorCount") || "3"
+    localStorage.getItem("cachedVisitorCount") || "3",
   );
   const lastFetch = localStorage.getItem("lastCountFetchTime");
   const isFresh = lastFetch && Date.now() - lastFetch < 300000;
@@ -210,7 +210,7 @@ const observer = new IntersectionObserver((entries) => {
       navLinks.forEach((link) => {
         link.classList.toggle(
           "active-link",
-          link.getAttribute("href") === `#${id}`
+          link.getAttribute("href") === `#${id}`,
         );
       });
     }
@@ -236,6 +236,7 @@ async function fetchData() {
     loadSkills(data.skills);
     loadEducation(data.Education);
     loadProjects(data.projects);
+    loadWorkExperience(data.workExperience);
     loadInternships(data.internshipExperience);
     loadcertification(data.certification);
   } catch (error) {
@@ -254,7 +255,7 @@ function loadHome(homeData) {
     <a href="${link.url}" target="_blank" class="home__social-link">
       <i class='${link.icon}'></i>
     </a>
-  `
+  `,
     )
     .join("");
 
@@ -300,7 +301,7 @@ function loadAbout(aboutData) {
       <h3 class="about__title">${item.title}</h3>
       <span class="about__subtitle">${item.subtitle}</span>
     </div>
-  `
+  `,
     )
     .join("");
 
@@ -378,9 +379,9 @@ function loadSkills(skillsData) {
       category.skills
         .map(
           (skill) =>
-            `<img src="${skill.icon}" alt="${skill.name}" title="${skill.name}">`
+            `<img src="${skill.icon}" alt="${skill.name}" title="${skill.name}">`,
         )
-        .join("")
+        .join(""),
     )
     .join("");
 
@@ -450,7 +451,7 @@ function loadEducation(educationData) {
         ${edu.cgpa ? `<p class="education__cgpa">CGPA: ${edu.cgpa}</p>` : ""}
         <p class="education__duration">${edu.duration}</p>
       </div>
-    </div>`
+    </div>`,
     )
     .join("");
 
@@ -501,7 +502,7 @@ function loadProjects(projectData) {
             Know More <i class='bx bx-right-arrow-alt work__icon'></i>
           </button>
         </div>
-      </div>`
+      </div>`,
       )
       .join("");
 
@@ -562,41 +563,149 @@ window.addEventListener("click", (e) => {
   if (e.target === modal) closeModal();
 });
 
+function loadWorkExperience(workData) {
+  const section = document.querySelector("#WORK-EXPERIENCE");
+  if (!section || !workData || !workData.jobs) return;
+
+  const totalJobs = workData.jobs.length;
+  const isSingle = totalJobs === 1;
+
+  const jobsHTML = workData.jobs
+    .map((job) => {
+      // 1. Single Card Premium Layout (Pins duration to top right)
+      if (isSingle) {
+        return `
+          <div class="internship__card--featured">
+            <span class="internship__duration--featured">${job.duration}</span>
+            
+            <div class="internship__header--featured">
+              ${job.department ? `<span class="internship__department--featured">${job.department}</span>` : ""}
+              <h3 class="internship__company--featured">${job.company}</h3>
+              <span class="internship__position--featured">${job.position}</span>
+            </div>
+            
+            <div class="internship__body--featured">
+              <p class="internship__description--featured">${job.description}</p>
+             
+            </div>
+          </div>
+        `;
+      }
+
+      // 2. Multi-Card Grid Layout (Default View)
+      return `
+        <div class="internship__card">
+          <div class="internship__header">
+            ${job.department ? `<span class="internship__department">${job.department}</span>` : ""}
+            <h3 class="internship__company">${job.company}</h3>
+            <span class="internship__position">${job.position}</span>
+            <span class="internship__duration">${job.duration}</span>
+          </div>
+          
+          <div class="internship__body">
+            <p class="internship__description">${job.description}</p>
+            <a href="#" class="internship__button">
+              View Details <i class="bx bx-right-arrow-alt internship__icon"></i>
+            </a>
+          </div>
+        </div>
+      `;
+    })
+    .join("");
+
+  // Dynamically switch parent class container to match the UI setup
+  const containerClass = isSingle
+    ? "internship__container--single"
+    : "internship__container container grid";
+
+  section.innerHTML = `
+    <span class="section__subtitle">${workData.sectionSubtitle}</span>
+    <h2 class="section__title">${workData.sectionTitle}</h2>
+
+    <div class="${containerClass}">
+      ${jobsHTML}
+    </div>
+  `;
+}
 function loadInternships(internshipData) {
   const section = document.querySelector("#EXPERIENCE");
-  if (!section || !internshipData) return;
+  if (!section || !internshipData || !internshipData.internships) return;
+
+  const totalInternships = internshipData.internships.length;
+  const isSingle = totalInternships === 1;
 
   const internshipsHTML = internshipData.internships
-    .map(
-      (intern) => `
-    <div class="internship__card">
-      <h3 class="internship__company">${intern.company}</h3>
-      <p class="internship__position">
-        <strong>${intern.position}</strong> | 
-        <span class="internship__duration">${intern.duration}</span>
-      </p>
-      <p class="internship__description">${intern.description}</p>
-      <a href="${intern.certificate}" class="internship__button" target="_blank">
-        View Certificate <i class='bx bx-link-external internship__icon'></i>
-      </a>
-    </div>
-  `
-    )
+    .map((intern) => {
+      // 1. Single Card Premium Layout (Pins duration tag to top right)
+      if (isSingle) {
+        return `
+          <div class="internship__card--featured">
+            <span class="internship__duration--featured">${intern.duration}</span>
+            
+            <div class="internship__header--featured">
+              <!-- Sub-wrapper allows titles to stack cleanly -->
+              <div class="internship__titles--featured">
+                ${intern.department ? `<span class="internship__department--featured">${intern.department}</span>` : ""}
+                <h3 class="internship__company--featured">${intern.company}</h3>
+                <span class="internship__position--featured">${intern.position}</span>
+              </div>
+            </div>
+            
+            <div class="internship__body--featured">
+              <p class="internship__description--featured">${intern.description}</p>
+              <a href="${intern.certificate}" class="internship__button--featured" target="_blank" rel="noopener noreferrer">
+                View Certificate <i class="bx bx-link-external internship__icon--featured"></i>
+              </a>
+            </div>
+          </div>
+        `;
+      }
+
+      // 2. Multi-Card Grid Layout (Prevents long title collisions using .internship__meta)
+      return `
+        <div class="internship__card">
+          <div class="internship__header">
+            ${intern.department ? `<span class="internship__department">${intern.department}</span>` : ""}
+            <h3 class="internship__company">${intern.company}</h3>
+            
+            <!-- Flex container: handles title wrapping and keeps capsule tag unbroken -->
+            <div class="internship__meta">
+              <span class="internship__position">${intern.position}</span>
+              <span class="internship__duration">${intern.duration}</span>
+            </div>
+          </div>
+          
+          <div class="internship__body">
+            <p class="internship__description">${intern.description}</p>
+            <a href="${intern.certificate}" class="internship__button" target="_blank" rel="noopener noreferrer">
+              View Certificate <i class="bx bx-link-external internship__icon"></i>
+            </a>
+          </div>
+        </div>
+      `;
+    })
     .join("");
+
+  // Dynamically toggle wrapper layout matching the design rules
+  const containerClass = isSingle
+    ? "internship__container--single"
+    : "internship__container container grid";
 
   section.innerHTML = `
     <span class="section__subtitle">${internshipData.sectionSubtitle}</span>
     <h2 class="section__title">${internshipData.sectionTitle}</h2>
-    <div class="internship__container container grid">
+    
+    <div class="${containerClass}">
       ${internshipsHTML}
-    </div>`;
+    </div>
+  `;
 }
 
 function loadcertification(certificationData) {
   const section = document.querySelector("#CERTIFICATION");
   if (!section || !certificationData) return;
 
-  let visibleCount = 3;
+  let visibleCount = 4;
   const certificates = certificationData.certificates;
 
   // Initialize Structure
@@ -625,7 +734,7 @@ function loadcertification(certificationData) {
           </a>
         </div>
       </div>
-    `
+    `,
       )
       .join("");
 
@@ -739,13 +848,13 @@ hoverTargets.forEach((target) => {
   target.addEventListener("mouseenter", () => {
     follower.style.transform = "scale(2)";
     follower.style.borderColor = getComputedStyle(
-      document.documentElement
+      document.documentElement,
     ).getPropertyValue("--first-color-alt");
   });
   target.addEventListener("mouseleave", () => {
     follower.style.transform = "scale(1)";
     follower.style.borderColor = getComputedStyle(
-      document.documentElement
+      document.documentElement,
     ).getPropertyValue("--first-color");
   });
 });

@@ -1470,45 +1470,66 @@ img {
   background-color: var(--first-color);
   color: var(--body-color);
 }
+/*============================================================
+   INTERNSHIP & WORK EXPERIENCE SECTION
+============================================================*/
 
-/*=============== Internship ===============*/
-/* Internship Section Container */
+/* Section Container */
 #internship-section {
   padding-top: 2rem;
 }
 
-/* Grid Layout similar to .work__container */
+/*--------------------------------------------
+   1. MULTI-CARD GRID LAYOUT (Default View)
+--------------------------------------------*/
 .internship__container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1.5rem;
-  padding-top: 1rem;
-  animation: fadeInUp 0.8s ease-out;
+  /* Mobile default: 1 full-width column */
+  grid-template-columns: 1fr;
+  gap: 1.75rem;
+  padding-top: 1.5rem;
+  animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Card style based on .work__card */
+/* Desktop Breakpoint: Forces exactly 2 cards in a row */
+@media screen and (min-width: 768px) {
+  .internship__container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
 .internship__card {
   background-color: var(--container-color);
-  padding: 1.5rem;
-  border-radius: 1rem;
+  padding: 1.75rem;
+  border-radius: 1.25rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  box-shadow: 0 4px 20px hsla(var(--first-hue), var(--sat), var(--lig), 0.1);
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  position: relative;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 8px 24px hsla(var(--first-hue), var(--sat), var(--lig), 0.04);
+  position: relative; /* Imperative context anchor for absolute positioning */
   overflow: hidden;
+  transition:
+    transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+    border-color 0.4s ease;
   animation: scaleIn 0.6s ease-out calc(0.2s + var(--intern-delay, 0s)) both;
 }
 
+/* Staggered Card Animation Delays */
 .internship__card:nth-child(1) {
   --intern-delay: 0s;
 }
 .internship__card:nth-child(2) {
-  --intern-delay: 0.2s;
+  --intern-delay: 0.15s;
+}
+.internship__card:nth-child(3) {
+  --intern-delay: 0.3s;
 }
 
-.internship__card::before {
+/* Sheen sweep animation setup */
+.internship__card::before,
+.internship__card--featured::before {
   content: "";
   position: absolute;
   top: 0;
@@ -1518,85 +1539,312 @@ img {
   background: linear-gradient(
     90deg,
     transparent,
-    rgba(255, 255, 255, 0.1),
+    rgba(255, 255, 255, 0.12),
     transparent
   );
-  transition: left 0.5s ease;
+  transition: left 0.6s ease;
+}
+
+/* Grid Card Hover Actions */
+.internship__card:hover {
+  transform: translateY(-6px);
+  border-color: hsla(var(--first-hue), var(--sat), var(--lig), 0.25);
+  box-shadow: 0 20px 32px hsla(var(--first-hue), var(--sat), var(--lig), 0.12);
 }
 
 .internship__card:hover::before {
   left: 100%;
 }
 
-.internship__card:hover {
-  transform: translateY(-8px) scale(1.02);
-  box-shadow: 0 20px 40px hsla(var(--first-hue), var(--sat), var(--lig), 0.2);
+/* Grid Card Internal Structure */
+.internship__header {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+  padding-right: 6.5rem; /* Protection padding: prevents long titles from sliding under the duration tag */
 }
 
-.internship__card:hover {
-  transform: translateY(-4px);
+.internship__body {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
 }
 
-/* Typography aligned with .work__title */
+/* Typography Hierarchy (Grid) */
 .internship__company {
-  font-size: var(--normal-font-size);
-  font-weight: var(--font-medium);
+  font-size: var(--h3-font-size, 1.25rem);
+  font-weight: var(--font-semibold, 600);
   color: var(--title-color);
-  margin-bottom: 0.5rem;
-  transition: all 0.3s ease;
+  margin-bottom: 0.25rem;
+  transition: color 0.3s ease;
 }
 
 .internship__card:hover .internship__company {
   color: var(--first-color);
 }
 
-.internship__position {
-  font-size: var(--small-font-size);
-  color: var(--text-color);
+.internship__department {
+  font-size: var(--smaller-font-size);
+  color: var(--first-color);
+  font-weight: var(--font-medium);
+  text-transform: uppercase;
+  letter-spacing: 0.75px;
   margin-bottom: 0.25rem;
 }
 
+.internship__position {
+  font-size: var(--small-font-size);
+  font-weight: var(--font-medium);
+  color: var(--text-color);
+  line-height: 1.4;
+}
+
+/* FIXED: Top-Right Capsule Tag Layout for Multi-Card View */
 .internship__duration {
+  display: block;
   font-size: var(--smaller-font-size);
-  font-style: italic;
+  font-weight: var(--font-medium);
+  font-style: normal;
   color: var(--text-color-light);
+  background-color: hsla(var(--first-hue), var(--sat), var(--lig), 0.05);
+  padding: 0.35rem 0.75rem;
+  margin: 0.6rem 0 0;
+  width: fit-content;
+  border-radius: 2rem;
+  border: 1px solid hsla(var(--first-hue), var(--sat), var(--lig), 0.08);
+  transition: all 0.4s ease;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.internship__card:hover .internship__duration {
+  color: var(--first-color);
+  background-color: hsla(var(--first-hue), var(--sat), var(--lig), 0.12);
+  border-color: hsla(var(--first-hue), var(--sat), var(--lig), 0.2);
 }
 
 .internship__description {
   font-size: var(--small-font-size);
   color: var(--text-color);
-  margin-top: 0.75rem;
-  line-height: 1.5;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
 }
+
+/* Default Active Button Background Design */
 .internship__button {
   width: max-content;
   color: var(--first-color);
+  background-color: hsla(var(--first-hue), var(--sat), var(--lig), 0.08);
   font-size: var(--small-font-size);
+  font-weight: var(--font-medium);
   display: inline-flex;
   align-items: center;
-  column-gap: 0.25rem;
-  margin-top: 1rem;
+  column-gap: 0.5rem;
   text-decoration: none;
-  font-weight: var(--font-medium);
-  transition: all 0.3s ease;
-  padding: 0.5rem;
-  border-radius: 0.5rem;
+  padding: 0.55rem 1rem;
+  border-radius: 0.625rem;
+  border: 1px solid hsla(var(--first-hue), var(--sat), var(--lig), 0.05);
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease,
+    border-color 0.3s ease;
 }
 
+.internship__card:hover .internship__button,
 .internship__button:hover {
-  background-color: hsla(var(--first-hue), var(--sat), var(--lig), 0.1);
+  background-color: hsla(var(--first-hue), var(--sat), var(--lig), 0.15);
   color: var(--first-color-alt);
-}
-
-.internship__button:hover .internship__icon {
-  transform: translateX(0.25rem) scale(1.1);
+  border-color: hsla(var(--first-hue), var(--sat), var(--lig), 0.15);
 }
 
 .internship__icon {
-  font-size: 1rem;
-  transition: transform 0.3s ease;
+  font-size: 1.1rem;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+.internship__card:hover .internship__icon,
+.internship__button:hover .internship__icon {
+  transform: translateX(4px);
+}
+
+/* Responsive Overrides for Multi-Card Mobile Views */
+@media screen and (max-width: 576px) {
+  .internship__header {
+    padding-right: 0; /* Clear grid layout restrictions on tight viewports */
+  }
+  .internship__duration {
+    position: static;
+    width: max-content;
+    margin-top: 0.5rem;
+    margin-bottom: 0.25rem;
+  }
+}
+
+/*--------------------------------------------
+   2. SINGLE-CARD SHOWCASE LAYOUT (Featured View)
+--------------------------------------------*/
+.internship__container--single {
+  display: flex;
+  justify-content: center;
+  padding-top: 1.5rem;
+  animation: fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.internship__card--featured {
+  background-color: var(--container-color);
+  width: 100%;
+  max-width: 760px;
+  padding: 2.25rem;
+  border-radius: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: 0 12px 32px hsla(var(--first-hue), var(--sat), var(--lig), 0.05);
+  transition:
+    transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+    border-color 0.4s ease;
+}
+
+.internship__card--featured:hover {
+  transform: translateY(-6px);
+  border-color: hsla(var(--first-hue), var(--sat), var(--lig), 0.3);
+  box-shadow: 0 24px 48px hsla(var(--first-hue), var(--sat), var(--lig), 0.15);
+}
+
+.internship__card--featured:hover::before {
+  left: 100%;
+}
+
+.internship__header--featured {
+  display: flex;
+  flex-direction: column;
+  padding-right: 7.5rem; /* Room for pinned top-right duration capsule */
+  margin-bottom: 1.25rem;
+}
+
+.internship__body--featured {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Typography Hierarchy (Featured) */
+.internship__company--featured {
+  font-size: var(--h2-font-size, 1.5rem);
+  font-weight: var(--font-semibold, 600);
+  color: var(--title-color);
+  margin-bottom: 0.35rem;
+  transition: color 0.3s ease;
+}
+
+.internship__card--featured:hover .internship__company--featured {
+  color: var(--first-color);
+}
+
+.internship__department--featured {
+  font-size: var(--smaller-font-size);
+  color: var(--first-color);
+  font-weight: var(--font-medium);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 0.5rem;
+}
+
+.internship__position--featured {
+  font-size: var(--normal-font-size, 1rem);
+  font-weight: var(--font-medium);
+  color: var(--text-color);
+  line-height: 1.4;
+}
+
+/* Top-Right Glassmorphic Floating Capsule Tag */
+.internship__duration--featured {
+  position: absolute;
+  top: 2.25rem;
+  right: 2.25rem;
+  font-size: var(--smaller-font-size);
+  font-weight: var(--font-medium);
+  color: var(--text-color-light);
+  background-color: hsla(var(--first-hue), var(--sat), var(--lig), 0.06);
+  padding: 0.4rem 0.85rem;
+  border-radius: 2rem;
+  border: 1px solid hsla(var(--first-hue), var(--sat), var(--lig), 0.1);
+  font-style: normal;
+  backdrop-filter: blur(4px);
+  transition: all 0.4s ease;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.internship__card--featured:hover .internship__duration--featured {
+  color: var(--first-color);
+  background-color: hsla(var(--first-hue), var(--sat), var(--lig), 0.12);
+  border-color: hsla(var(--first-hue), var(--sat), var(--lig), 0.2);
+}
+
+.internship__description--featured {
+  font-size: var(--small-font-size);
+  color: var(--text-color);
+  line-height: 1.65;
+  margin-bottom: 1.75rem;
+}
+
+/* Featured Button Adjustments */
+.internship__button--featured {
+  width: max-content;
+  color: var(--first-color);
+  background-color: hsla(var(--first-hue), var(--sat), var(--lig), 0.08);
+  font-size: var(--small-font-size);
+  font-weight: var(--font-medium);
+  display: inline-flex;
+  align-items: center;
+  column-gap: 0.5rem;
+  text-decoration: none;
+  padding: 0.65rem 1.25rem;
+  border-radius: 0.75rem;
+  border: 1px solid hsla(var(--first-hue), var(--sat), var(--lig), 0.05);
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease,
+    border-color 0.3s ease;
+}
+
+.internship__card--featured:hover .internship__button--featured,
+.internship__button--featured:hover {
+  background-color: hsla(var(--first-hue), var(--sat), var(--lig), 0.15);
+  color: var(--first-color-alt);
+  border-color: hsla(var(--first-hue), var(--sat), var(--lig), 0.2);
+}
+
+.internship__icon--featured {
+  font-size: 1.1rem;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.internship__card--featured:hover .internship__icon--featured,
+.internship__button--featured:hover .internship__icon--featured {
+  transform: translateX(5px);
+}
+
+/* Mobile Media Query for Single Card Showcase */
+@media screen and (max-width: 576px) {
+  .internship__card--featured {
+    padding: 1.5rem;
+  }
+
+  .internship__header--featured {
+    padding-right: 0;
+  }
+
+  .internship__duration--featured {
+    position: static;
+    width: max-content;
+    margin-top: 0.75rem;
+    margin-bottom: 0.5rem;
+  }
+}
 /*=============== Education ===============*/
 .education__card {
   background-color: var(--container-color);

@@ -285,9 +285,22 @@
       }
     ]
   },
-  "internshipExperience": {
+  "workExperience": {
     "sectionTitle": "Work Experience",
-    "sectionSubtitle": "My Internship",
+    "sectionSubtitle": "Professional Experience",
+    "jobs": [
+      {
+        "company": "University of Madras",
+        "position": "Computer Programmer",
+        "department": "",
+        "duration": "May 2026 – Present",
+        "description": "Developing and maintaining software applications for university result processing systems, ensuring smooth performance, troubleshooting technical issues, and improving system efficiency."
+      }
+    ]
+  },
+  "internshipExperience": {
+    "sectionTitle": "Internships",
+    "sectionSubtitle": "Learning & Industry Experience",
     "internships": [
       {
         "company": "Zignus Group Pvt. Ltd., Chennai",
